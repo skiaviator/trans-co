@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+    <html>
+<style>
+    
+</style>
+<body>
+<link rel="stylesheet" href="style.css">
+    <div id="webpage">
+        <div id= "left"> <img src="123.png" style="width: 240px; height: 120px;"/></div>
+        <div id="up"> 
+            
+            <ul>
+                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+                <li><a href="reserved.html">ZAREZERWUJ PRZEJAZD</a></li> 
+                <li><a href="reservacion.html">MOJE REZRERWACJE</a></li> 
+                <li><a href="data.html">MOJE DANE</a></li> 
+                <li><a href="distribution.html">WYLOGUJ SIĘ</a></li> 
+            </ul>
+         </div>
+         <div id="description"> <h3>Uzupełnij poniższe dane, w celu dokonania rezerwacji:</h3> </div>
+<div id = form1>
+    <form action="reserved.html" method ="GET">
+        <label >Wybierz datę rezerwacji:</label><br>
+        <input type="date" id="dateres"> <br>
+        <label >Wybierz trasę:</label><br>
+        <select>
+            <option id="opcjakrkktw">
+                Kraków->Katowice
+            </option>
+            <option>
+                Katowice->Kraków
+            </option>
+        </select><br>
+        <label >Wybierz godzinę:</label><br>
+        <script>
+            if(document.getElementById(opcjakrkktw)==('Kraków->Katowice'))
+            {
+
+            };)
+        </script>
+        <select id = "rozkladDoKatowic">
+            <option>
+                6:00
+            </option>
+            <option>
+                9:00
+            </option>
+            <option>
+                12:00
+            </option>
+            <option>
+                16:00
+            </option>
+            <option>
+                18:30
+            </option>
+        </select><br>
+  
+        <label >Podaj liczbę pasażerów:</label><br>
+        <select>
+            <option>
+                1
+            </option>
+            <option>
+                2
+            </option>
+            <option>
+                3
+            </option>
+            <option>
+                4
+            </option>
+            <option>
+                5
+            </option>
+            <option>
+                6
+            </option>
+        </select><br><br>
+        <input type ="submit" id = "zarezerwujTeraz" value="Przejdź do płatności">
+    </form>
+</pre>
+</div>
+    </body>
+    </html>
