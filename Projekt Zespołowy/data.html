@@ -17,7 +17,21 @@
                 <li><a href="distribution.html">WYLOGUJ SIĘ</a></li> 
             </ul>
          </div>
-         <div id="description"> <h3>Poniżej podano twoje dane. Możesz je edytować.</h3> </div>
-
+         <div id="description"> <h3>Poniżej zostały wyświetlone twoje dane. Możesz je edytować.</h3> </div>
+         <div id="form1"> 
+     <form action="data.html" method ="GET">
+         <label >Imię:</label><br>
+         <input type="text" id="name_db"> <br>
+         <label >Nazwisko:</label><br>
+         <input type="text" id="last_name_db"> <br>
+         <label >Data urodzenia:</label><br>
+         <input type="date" id="date_db"> <br>
+         <label >E-mail:</label><br>
+         <input type="email" id="email_db"> <br>
+         <label >Numer telefonu:</label><br>
+         <input type="tel" id="telephon_db"> <br><br>
+         <input type ="submit" id = "data_edit_db" value="Edytuj dane">
+     </form>
+ </div>
     </body>
     </html>
