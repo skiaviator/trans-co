@@ -17,8 +17,7 @@ public class Person {
     @GeneratedValue
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="address_id",nullable=false)
+    @Embedded
     private Address address;
 
     private String firstname;
