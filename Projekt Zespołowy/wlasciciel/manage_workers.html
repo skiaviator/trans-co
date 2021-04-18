@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+    <html>
+<style>
+    
+</style>
+<body>
+<link rel="stylesheet" href="style.css">
+    <div id="webpage">
+        <div id= "left"> <img src="123.png" style="width: 240px; height: 120px;"/></div>
+        <div id="up"> 
+            
+            <ul>
+                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+                <li><a href="#">ZARZĄDZAJ PRACOWNIKAMI</a></li> 
+                <li><a href="manage_routes.html">ZARZĄDZAJ TRASAMI</a></li> 
+                <li><a href="manage_presents.html">ZARZĄDAJ NAGRODAMI</a></li> 
+                <li><a href="manage_secretariat_calendar.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> 
+                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> 
+                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>
+                <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>  
+                <li><a href="#">WYLOGUJ SIĘ</a></li> 
+            </ul>
+         </div>
+         <div id="description"> <h3>Poniżej zostały podane dane pracowników obecnie pracujących w firmie: </h3> </div>
+        <div id = form method ="GET">
+           <pre>
+               (dane z bazy)
+           </pre>
+           </div>
+           <div id = form1>
+               
+               <form action="manage_workers.html" method ="GET">  
+               <h4>Dodaj nowego pracownika do bazy:</h4>             
+               <label >Imię pracownika:</label><br>
+               <input type="text" id="name"> <br><br>
+               <label >Nazwisko pracownika:</label><br>
+               <input type="text" id="last_name"> <br><br>
+               <label >Numer PESEL:</label><br>
+               <input type="number" id="PESEL"> <br><br>
+               <label >Stanowisko:</label><br>
+               <select>
+                   <option value="1">
+                       Kierowca
+                   </option>
+                   <option value="2">
+                       Sekretarz
+                   </option>
+               </select><br><br>
+               <label >Pensja:</label><br>
+               <input type="number" id="money"> <br><br>
+               <input type ="submit" id = "dodaj" value="Dodaj pracownika">
+               </form>
+           </div>
+           <div id = form1>
+               <form action="manage_workers.html" method ="GET">
+                   <h4>Modyfikuj dane pracownika:</h4>
+                   <label >Podaj identyfikator pracownika:</label><br>
+                   <input type="number" id="id"> <br><br>
+                   <label >Imię pracownika:</label><br>
+                   <input type="text" id="name"> <br><br>
+                   <label >Nazwisko pracownika:</label><br>
+                   <input type="text" id="last_name"> <br><br>
+                   <label >Numer PESEL:</label><br>
+                   <input type="number" id="PESEL"> <br><br>
+                   <label >Stanowisko:</label><br>
+                   <select>
+                       <option value="1">
+                           Kierowca
+                       </option>
+                       <option value="2">
+                           Sekretarz
+                       </option>
+                   </select><br><br>
+                   <label >Pensja:</label><br>
+                   <input type="number" id="money"> <br><br>
+                   <input type ="submit" id = "aktualizuj" value="Aktualizuj dane pracownika">
+                   </form>
+               </div>
+                   <form action="manage_workers.html" method ="GET">
+                       <h4>Usuń pracownika z bazy:</h4>
+                       <label >Podaj identyfikator pracownika:</label><br>
+                       <input type="number" id="id"> <br><br>
+                       <input type ="submit" id = "usun" value="Zwolnij pracownika">
+                       </form>
+    </body>
+    </html>
