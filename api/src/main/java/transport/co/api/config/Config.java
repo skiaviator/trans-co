@@ -6,6 +6,9 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.modelmapper.*;
+
+
 
 import static java.util.Collections.singletonList;
 
@@ -20,4 +23,10 @@ public class Config {
                 .paths(PathSelectors.regex ( "^(?!/(error).*$).*$"))
                 .build();
     }
+
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
+
 }

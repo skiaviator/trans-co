@@ -1,0 +1,1 @@
+insert into customers(id, country, city, postcode, street, buildingnumber,apartmentnumber, firstname, surname, email, birthdate, phonenr,notrealized,points) values (1,'poland','cracow','31-875','dywizjonu',54,40,'damian','zamojski','dam130@',1987-12-11,'501969925',0,0);

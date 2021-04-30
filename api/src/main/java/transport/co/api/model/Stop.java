@@ -31,4 +31,7 @@ public class Stop {
     @ManyToMany(mappedBy="routeStops")
     private List<Route> routes;
 
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "stop")
+    private List<Schedule> schedule;
+
 }

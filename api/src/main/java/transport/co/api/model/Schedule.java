@@ -6,14 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Time;
+
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name="schedules")
 public class Schedule {
 
@@ -22,14 +20,15 @@ public class Schedule {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="route_id",nullable=false)
-    private Route route;
+    @JoinColumn(name = "stop_id")
+    private Stop stop;
 
     @ManyToOne
-    @JoinColumn(name="bus_id",nullable=false)
+    @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    private Time arrive;
 
-    private Time depart;
+    //private Time arrive;
+
+    private Date depart;
 }

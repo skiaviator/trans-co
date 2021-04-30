@@ -6,19 +6,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name="perm_parking")
 public class PermParking {
 
     @Id
     @GeneratedValue
     private long id;
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "perm_parking_id", updatable = false, insertable = false)
+    private List<Bus> buses;
 
     @Embedded
     private Address address;

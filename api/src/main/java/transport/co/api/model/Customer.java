@@ -6,20 +6,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name = "customers")
 public class Customer extends Person{
 
     private int points;
     private int notrealized;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Reservation> reservations;
+
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "customer")
+   // @JoinColumn(name = "customer_id", updatable = false, insertable = false)
+    private List<Reservation> reservations = new ArrayList<>();
 }

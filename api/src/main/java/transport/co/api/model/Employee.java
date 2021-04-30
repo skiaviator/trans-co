@@ -12,9 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name = "employees")
 public class Employee extends Person{
 

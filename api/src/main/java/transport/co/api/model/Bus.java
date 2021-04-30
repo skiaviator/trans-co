@@ -12,9 +12,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name="buses")
 public class Bus {
 
@@ -22,15 +19,14 @@ public class Bus {
     @GeneratedValue
     private long id;
 
-    @OneToMany(mappedBy = "bus")
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "bus")
     private List<Schedule> schedule;
 
     @ManyToOne
-    @JoinColumn(name="perm_parking_id",nullable=false)
     private PermParking permParking;
 
-    @ManyToMany(mappedBy="drivedBuses")
-    private List<Driver> drivers;
+//    @ManyToMany(mappedBy="drivedBuses")
+//    private List<Driver> drivers;
 
     private String busModel;
 

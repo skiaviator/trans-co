@@ -18,11 +18,11 @@ import java.util.List;
 public class Driver extends Person{
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "driver_bus",
-            joinColumns = @JoinColumn(name = "driver_id"),
-            inverseJoinColumns = @JoinColumn(name = "bus_id"))
-    private List<Bus> drivedBuses;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "driver_bus",
+//            joinColumns = @JoinColumn(name = "driver_id"),
+//            inverseJoinColumns = @JoinColumn(name = "bus_id"))
+//    private List<Bus> drivedBuses;
 
 }

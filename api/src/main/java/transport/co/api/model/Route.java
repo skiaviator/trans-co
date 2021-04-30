@@ -11,9 +11,6 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name = "routes")
 public class Route {
     @Id
@@ -22,12 +19,19 @@ public class Route {
 
     private float fee;
 
-    @OneToMany(mappedBy = "route")
-    private List<Reservation> reservation;
+    private String routeName;
 
+    //dlugosc przejazdu
 
-    @OneToMany(mappedBy = "route")
-    private List<Schedule> schedule;
+    //routeWDroogastrone
+
+   @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "route")
+  // @JoinColumn(name = "route_id", updatable = false, insertable = false)
+   private List<Reservation> reservation;
+
+//    @OneToMany(cascade = CascadeType.REMOVE)
+//    @JoinColumn(name = "route_id", updatable = false, insertable = false)
+//    private List<Schedule> schedule;
 
     @ManyToMany
     @JoinTable(
@@ -35,5 +39,6 @@ public class Route {
             joinColumns = @JoinColumn(name = "route_id"),
             inverseJoinColumns = @JoinColumn(name = "stop_id"))
     private List<Stop> routeStops;
+
 
 }
