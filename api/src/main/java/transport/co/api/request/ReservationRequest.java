@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ReservationRequest {
 
-    private long customerId;
-    private long routeId;
-    private long scheduleId;
+    private long customerIdd;
+    private long routeIdd;
+    private long scheduleIdd;
 }

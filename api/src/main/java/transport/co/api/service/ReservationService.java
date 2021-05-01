@@ -10,6 +10,7 @@ import transport.co.api.repository.ReservationRepository;
 import transport.co.api.repository.RouteRepository;
 import transport.co.api.request.ReservationRequest;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -48,11 +49,14 @@ public class ReservationService {
 
     }
 
+    @Transactional
     public Reservation addReservation(ReservationRequest reservationRequest) {
-        Reservation reservation = new Reservation(customerService.getSingleCustomer(reservationRequest.getCustomerId()),
-                routeService.getSingleRoute(reservationRequest.getRouteId()),
-                scheduleService.getSingleSchedule(reservationRequest.getScheduleId()).getDepart(),
+        Customer customer = customerService.getSingleCustomer(reservationRequest.getCustomerIdd());
+        Reservation reservation = new Reservation(customer,
+                routeService.getSingleRoute(reservationRequest.getRouteIdd()),
+                scheduleService.getSingleSchedule(reservationRequest.getScheduleIdd()).getDepart(),
                 ReservationStatus.toBeRealized,12);
+        customer.addReservation(reservation);
        return reservationRepository.save(reservation);
 
     }

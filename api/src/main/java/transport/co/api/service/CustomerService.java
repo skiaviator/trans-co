@@ -2,28 +2,16 @@ package transport.co.api.service;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import transport.co.api.dto.ReservationDto;
 //import transport.co.api.dto.ReservationDtoMapper;
 import transport.co.api.model.Customer;
-import transport.co.api.model.Reservation;
-import transport.co.api.model.Route;
 import transport.co.api.repository.CustomerRepository;
 import transport.co.api.repository.ReservationRepository;
 import transport.co.api.repository.RouteRepository;
+import transport.co.api.request.PersonRequest;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,8 +29,11 @@ public class CustomerService {
         return customerRepository.findById(id).orElseThrow();
     }
 
-    public Customer addCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer addCustomer(PersonRequest personRequest) {
+        Customer customer=new Customer(personRequest);
+        System.out.println(customer.getId());
+        customerRepository.save(customer);
+        return customer;
     }
 
 

@@ -16,7 +16,8 @@ import java.util.Date;
 public class Schedule {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_generator")
+    @SequenceGenerator(name="route_generator", sequenceName = "route_seq")
     private long id;
 
     @ManyToOne

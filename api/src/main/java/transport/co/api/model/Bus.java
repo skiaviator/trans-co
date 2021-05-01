@@ -16,7 +16,8 @@ import java.util.List;
 public class Bus {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bus_generator")
+    @SequenceGenerator(name="bus_generator", sequenceName = "bus_seq")
     private long id;
 
     @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "bus")

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import transport.co.api.request.PersonRequest;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,14 @@ public class Customer extends Person{
 
 
     @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "customer")
-   // @JoinColumn(name = "customer_id", updatable = false, insertable = false)
     private List<Reservation> reservations = new ArrayList<>();
+
+    public Customer(){}
+    public Customer (PersonRequest personRequest){
+    super(personRequest);
+    }
+
+    public void addReservation(Reservation reservation){
+        reservations.add(reservation);
+    }
 }

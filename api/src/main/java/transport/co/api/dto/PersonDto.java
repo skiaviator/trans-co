@@ -1,9 +1,13 @@
 package transport.co.api.dto;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
-
+@Getter
+@Setter
 public abstract class PersonDto {
 
     private long id;

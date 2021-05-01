@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import transport.co.api.request.PersonRequest;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,4 +18,8 @@ public class Employee extends Person{
 
 
     private double pension;
+
+    public Employee(PersonRequest personRequest){
+        super(personRequest);
+    }
 }

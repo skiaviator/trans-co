@@ -15,7 +15,8 @@ import java.util.List;
 public class PermParking {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "permparking_generator")
+    @SequenceGenerator(name="permparking_generator", sequenceName = "permparking_seq")
     private long id;
 
     @OneToMany(cascade = CascadeType.REMOVE)

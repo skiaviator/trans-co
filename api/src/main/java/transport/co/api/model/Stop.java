@@ -19,15 +19,18 @@ import java.util.List;
 public class Stop {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_generator")
+    @SequenceGenerator(name="route_generator", sequenceName = "route_seq")
     private long id;
 
-    @OneToOne(mappedBy= "nextStop", cascade = CascadeType.ALL)
-    private Stop prevStop;
-
-    @OneToOne
-    private Stop nextStop;
-
+//    @OneToOne(mappedBy= "nextStop", cascade = CascadeType.ALL)
+//    @Column(nullable = true)
+//    private Stop prevStop;
+//
+//    @OneToOne
+//    @Column(nullable = true)
+//    private Stop nextStop;
+//
     @ManyToMany(mappedBy="routeStops")
     private List<Route> routes;
 

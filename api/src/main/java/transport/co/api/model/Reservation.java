@@ -16,7 +16,8 @@ import java.util.Date;
 public class Reservation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_generator")
+    @SequenceGenerator(name="reservation_generator", sequenceName = "reservation_seq")
     private long id;
    // private long route_Id;
 
