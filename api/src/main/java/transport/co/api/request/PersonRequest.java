@@ -11,6 +11,8 @@ public class PersonRequest {
 
     private AddressRequest addressRequest;
 
+    private UserRequest userRequest;
+
     private String firstname;
 
     private String surname;
@@ -23,12 +25,13 @@ public class PersonRequest {
 
     public PersonRequest() { }
 
-    public PersonRequest(AddressRequest addressRequest, String firstname, String surname, String email, Date birthdate, String phonenr) {
+    public PersonRequest(AddressRequest addressRequest,UserRequest userRequest, String firstname, String surname, String email, Date birthdate, String phonenr) {
         this.addressRequest = addressRequest;
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
         this.birthdate = birthdate;
         this.phonenr = phonenr;
+        this.userRequest=userRequest;
     }
 }

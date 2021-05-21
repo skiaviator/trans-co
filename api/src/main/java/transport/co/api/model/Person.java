@@ -5,13 +5,12 @@ import lombok.Setter;
 import transport.co.api.request.PersonRequest;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
-@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
+@Entity
 public class Person {
 
     @Id
@@ -33,6 +32,9 @@ public class Person {
 
     private String phonenr;
 
+    @OneToOne(targetEntity = AppUser.class)
+    @JoinColumn(name = "appUser")
+    protected AppUser appUser;
   //  @OneToOne
   //  @JoinColumn(name = "personId", updatable = false, insertable = false)
  //   private Employee employee;

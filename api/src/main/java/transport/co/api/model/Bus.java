@@ -38,7 +38,7 @@ public class Bus {
 
     private String avFuelConsumption;
 
-    private double mileage;
+    //private double mileage;
 
     @Column(nullable=false)
     private boolean availability;

@@ -14,11 +14,11 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "customers")
-public class Customer extends Person{
+public class Customer extends Person {
+
 
     private int points;
     private int notrealized;
-
 
     @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "customer")
     private List<Reservation> reservations = new ArrayList<>();
