@@ -22,7 +22,49 @@
             </ul>
          </div>
          <div id="description"> <h3>Poniżej zostały podane aktualne trasy: </h3> </div>
-            <div id = form method ="GET">
+
+        <script>
+            // pobieranie tras
+            var stat;
+            var odp
+          async function get_routes()
+            {
+              await  axios.get('http://localhost:8080/routes')
+                    .then((response) => {
+                        console.log(response.data);
+                        console.log(response.status);
+                        stat = response.data;
+                        odp = JSON.stringify(Object.keys(stat));
+                        alert(odp);
+                    })
+                    .catch((error) => {
+                        alert('Wystąpił błąd!')
+                    });
+return stat;
+            }
+
+            alert(JSON.stringify(Object.keys(get_routes())));
+
+        </script>
+        <script>
+            // dodawanie tras
+            dane =
+                {
+
+                    fee : 25,
+                    routeName: "KRK-KTW"
+
+                }
+          //  axios.post('http://localhost:8080/routes', JSON.stringify(dane), {headers:{'Content-Type': 'application/JSON'}})
+           //     .then((response) =>
+           //     {
+           //         console.log(response.data);
+           //         console.log(response.status)
+           //         stat = response.status;
+          //      })
+            //.catch((error) =>{alert('Wystąpił błąd!')} );
+        </script>
+            <div id = form>
                 <pre>
                     (dane z bazy)
                 </pre>
