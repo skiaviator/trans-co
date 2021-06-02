@@ -34,13 +34,17 @@
                         console.log(response.data);
                         console.log(response.status);
                         stat = response.data;
-                        odp = JSON.stringify(Object.keys(stat));
-                        alert(odp);
+                        odp = JSON.stringify(Object.entries(stat));
+                        //alert(odp);
+                       let fee  = odp.substr(odp.indexOf('fee')+5,odp.indexOf('routeName')-22);
+                     //  let routeName  = odp.substr(odp.indexOf('routeName')+12,odp.indexOf('reservation')-39);
+
+                        alert(fee);
                     })
                     .catch((error) => {
                         alert('Wystąpił błąd!')
                     });
-return stat;
+return odp;
             }
 
             alert(JSON.stringify(Object.keys(get_routes())));
@@ -56,12 +60,12 @@ return stat;
 
                 }
           //  axios.post('http://localhost:8080/routes', JSON.stringify(dane), {headers:{'Content-Type': 'application/JSON'}})
-           //     .then((response) =>
-           //     {
-           //         console.log(response.data);
-           //         console.log(response.status)
-           //         stat = response.status;
-          //      })
+             //   .then((response) =>
+              //  {
+             //       console.log(response.data);
+               //     console.log(response.status)
+              //      stat = response.status;
+             //   })
             //.catch((error) =>{alert('Wystąpił błąd!')} );
         </script>
             <div id = form>
