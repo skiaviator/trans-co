@@ -53,7 +53,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
 
-        roleTargetUrlMap.put("ROLE_CUSTOMER", "http://127.0.0.1:5500/klient/reservacion.html");
+        roleTargetUrlMap.put("ROLE_CUSTOMER", "http://localhost:63342/api/api.main/frontend/klient/reservacion.html");
         roleTargetUrlMap.put("ROLE_ADMIN", "http://127.0.0.1:5500/manage_buses.html");
 
 
