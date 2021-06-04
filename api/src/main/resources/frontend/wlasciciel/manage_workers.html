@@ -41,16 +41,15 @@
                         let newNumber = numer.substr((numer.lastIndexOf("]")-2),1) //numer ostatniego dto
                         let dane = []; //tablica na dane
                         let wypisz = "";
-
-
                          for (let i=0; i <parseInt(newNumber)+1; i++)
                         {
                             odp = JSON.stringify(Object.entries(stat[i]));
+                            let id = odp.substring(odp.indexOf('id')+4,odp.indexOf('address')-4);
                             let login  = odp.substring(odp.indexOf('username')+11,odp.indexOf('password')-3);
                             let name  = odp.substring(odp.indexOf('firstname')+12,odp.indexOf('surname')-5);
                             let surname  = odp.substring(odp.indexOf('surname')+10,odp.lastIndexOf('email')-5);
                             let email  = odp.substring(odp.indexOf('email')+8,odp.indexOf('birthdate')-5);
-                            dane[i]=["ID: "+ (i+1)+". "+"Login: "+ login+". "+"Imię: "+name+". "
+                            dane[i]=["ID: "+ id+". "+"Login: "+ login+". "+"Imię: "+name+". "
                             +"Nazwisko: "+surname+". "+"E-mail: "+email];
                             wypisz += dane[i]+"\n";
                         }
@@ -86,7 +85,7 @@
                 id: id1
 
             }
-        axios.delete('http://localhost:8080/customers')
+        axios.delete('http://localhost:8080/customers/'+id1)
             .then((response) => {
                 console.log(response.data);
                 console.log(response.status)
@@ -96,15 +95,16 @@
                 alert('Wystąpił błąd!')
             });
     }
+    delete_customer();
 </script>
-<!--           <div id = form1>-->
-<!--               <form action="manage_workers.html" method ="GET">-->
-<!--                   <h4>Usuń klienta z bazy:</h4>-->
-<!--                   <label >Podaj numer ID klienta:</label><br>-->
-<!--                   <input type="number" id="id"> <br><br>-->
-<!--                   <input type ="button" id = "usun" value="Usuń klienta" onclick = "delete_customer()">-->
-<!--               </form>-->
-<!--           </div>-->
+           <div id = form1>
+               <form action="manage_workers.html" method ="GET">
+                   <h4>Usuń klienta z bazy:</h4>
+                   <label >Podaj numer ID klienta:</label><br>
+                   <input type="number" id="id"> <br><br>
+                   <input type ="submit" id = "usun" value="Usuń klienta" onclick = "delete_customer()">
+               </form>
+           </div>
 
 <!--               <form action="manage_workers.html" method ="GET">  -->
 <!--               <h4>Dodaj nowego pracownika do bazy:</h4>             -->
