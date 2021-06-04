@@ -56,7 +56,10 @@
                         }
 
 
-                         return  document.getElementById("change").innerHTML = wypisz;
+                        if (wypisz=="")
+                            return document.getElementById("change").innerHTML = "Brak klientów";
+                        else
+                            return  document.getElementById("change").innerHTML = wypisz;
                         //   for (let i=0; i < parseInt(newNumber)+1; i++)
                         //   {
 
