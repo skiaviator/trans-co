@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+    <html>
+        <meta charset="UTF-8">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<body>
+<link rel="stylesheet" href="/api/api.main/adds/style.css">
+    <div id="webpage">
+        <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
+        <div id="up"> 
+            <ul>
+                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+                <li><a href="distribution.html">TRASY</a></li>
+                <li><a href="contact.html">KONTAKT</a></li> 
+                <li><a href="http://localhost:8080/login">ZALOGUJ SIĘ</a></li> 
+                <li><a href="register.html">ZAREJESTRUJ SIĘ</a></li> 
+            </ul>
+         </div>
+        <div id="description"> <h3>Wypełnij poniższy formularz, aby się zarejestrować.<br> (*) - POLE OBOWIĄZKOWE</h3> </div>
+        <div id="form1"> 
+            <script id="register">
+               var stat;
+                async function register(){
+                    var mieszkanie = document.getElementById('apartmentNumber').value;
+                    var budynek = document.getElementById('buildingNumber').value;
+                    var miasto = document.getElementById('city').value;
+                    var kraj = document.getElementById('country').value;
+                    var kod = document.getElementById('postalCode').value;
+                    var ulica = document.getElementById('street').value;
+                    var data = document.getElementById('date').value;
+                    var mail = document.getElementById('email').value;
+                    var imie = document.getElementById('name').value;
+                    var telefon = document.getElementById('telephon').value;
+                    var nazwisko = document.getElementById('last_name').value;
+                    var login= document.getElementById('login').value;
+                    var haslo = document.getElementById('haslo').value;
+                    var sprawdzenie = document.getElementById('sprawdzenie').value;
+                    if(imie==""||budynek==""||miasto==""||kraj==""||kod==""||ulica==""||data==""||mail==""||
+                    telefon==""||nazwisko==""||login==""||haslo==""||sprawdzenie=="")
+                 return  alert('Rejestracja nie powiodła się! Niepoprawnie uzupełniono dane!');
+                 if(haslo!=sprawdzenie)
+                 return  alert('Hasła nie są identyczne!');
+                const dane =
+                {
+                    addressRequest: {
+                    apartmentnumber: mieszkanie,
+                    buildingnumber: budynek,
+                    city: miasto,
+                    country: kraj,
+                    postcode: kod,
+                    street: ulica
+                  },
+                  birthdate: data,
+                  email: mail,
+                  firstname: imie,
+                  phonenr: telefon,
+                  surname: nazwisko,
+                  userRequest: {
+                  matchingPassword: login,
+                  password: haslo,
+                  username: sprawdzenie
+                  }
+                };
+                
+                await axios.post('http://localhost:8080/registration', JSON.stringify(dane), {headers:{'Content-Type': 'application/JSON'}})
+                .then((response) => 
+                {
+                    console.log(response.data);
+                    console.log(response.status)
+                    stat = response.status;
+                })
+                .catch((error) =>{alert('Taki login lub e-mail już istnieją w bazie!')} );
+                
+                if(stat==200)
+               { location.replace("contact.html");  alert('Pomyslnie zarejestrowano!'); }
+                else { alert('Rejestracja nie powiodła się! Spróbuj jeszcze raz!');}  
+            }
+                </script>
+    <form>
+        <label >Login(*):</label><br>
+        <input type="text" id="login"> <br>
+        <label >Hasło(*):</label><br>
+        <input type="password" id="haslo"> <br>
+        <label >Powtórz hasło(*):</label><br>
+        <input type="password" id="sprawdzenie"> <br>
+        <label >Imię(*):</label><br>
+        <input type="text" id="name"> <br>
+        <label >Nazwisko(*):</label><br>
+        <input type="text" id="last_name"> <br>
+        <label >Data urodzenia(*):</label><br>
+        <input type="date" id="date"> <br>
+        <label >E-mail(*):</label><br>
+        <input type="email" id="email"> <br>
+        <label >Numer telefonu(*):</label><br>
+        <input type="text" id="telephon"> <br>
+        <label >Miasto(*):</label><br>
+        <input type="text" id="city"> <br>
+        <label >Kraj(*):</label><br>
+        <input type="text" id="country"> <br>
+        <label >Kod pocztowy(*):</label><br>
+        <input type="text" id="postalCode"> <br>
+        <label >Ulica(*):</label><br>
+        <input type="text" id="street"> <br>
+        <label >Numer budynku(*):</label><br>
+        <input type="number" id="buildingNumber"> <br>
+        <label >Numer mieszkania:</label><br>
+        <input type="number" id="apartmentNumber"> <br><br>
+        <input type ="button" value ="Zarejestruj się" id = "send" onclick="register()">
+    </form>
+</div>
+</div>
+    </body>
+    </html>

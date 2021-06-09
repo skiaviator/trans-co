@@ -12,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -33,6 +34,7 @@ import transport.co.api.service.UserDetailsServiceImpl;
 import javax.sql.DataSource;
 import java.util.Collections;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -43,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
-//
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -64,12 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/console/**").permitAll()
                 .antMatchers("/registration").permitAll()
+                .antMatchers(HttpMethod.GET,"/routes").permitAll()
                 .antMatchers(HttpMethod.POST,"/routes/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                     .loginProcessingUrl("/login")
                     .usernameParameter("username")
+                    .defaultSuccessUrl("/login")
                     .passwordParameter("password")
                     .successHandler(customAuthenticationSuccesHandler())
                     .permitAll()
@@ -79,7 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
 //                .exceptionHandling()
 //                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-
     }
 
     @Bean
