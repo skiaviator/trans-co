@@ -14,6 +14,8 @@ public class RouteDto {
 
     private String routeName;
 
+    private String rideTime;
+
     private List<StopDto> stopDtoList;
 
     public RouteDto(){
@@ -24,6 +26,7 @@ public class RouteDto {
         routeDto.setId(route.getId());
         routeDto.setRouteName(route.getRouteName());
         routeDto.setFee(route.getFee());
+        routeDto.setRideTime(route.getRideTime());
         routeDto.setStopDtoList(StopDto.fromList(route.getRouteStops()));
         return routeDto;
     }

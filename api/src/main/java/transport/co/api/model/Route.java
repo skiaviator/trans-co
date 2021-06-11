@@ -1,13 +1,12 @@
 package transport.co.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import transport.co.api.request.PersonRequest;
 import transport.co.api.request.RouteRequest;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,24 +24,21 @@ public class Route {
 
     private String routeName;
 
-    //dlugosc przejazdu
+    private String rideTime;
+
 
     //routeWDroogastrone
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "route")
+    private List<Reservation> reservation;
 
-   @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "route")
-  // @JoinColumn(name = "route_id", updatable = false, insertable = false)
-   private List<Reservation> reservation;
-
-//    @OneToMany(cascade = CascadeType.REMOVE)
-//    @JoinColumn(name = "route_id", updatable = false, insertable = false)
-//    private List<Schedule> schedule;
 
     @ManyToMany
     @JoinTable(
             name = "route_stop",
             joinColumns = @JoinColumn(name = "route_id"),
             inverseJoinColumns = @JoinColumn(name = "stop_id"))
-    private List<Stop> routeStops;
+    private List<Stop> routeStops=new ArrayList<>();
 
     public Route (RouteRequest routeRequest){
         this.fee=routeRequest.getFee();

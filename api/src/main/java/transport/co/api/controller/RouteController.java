@@ -3,17 +3,9 @@ package transport.co.api.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import transport.co.api.dto.CustomerDto;
-import transport.co.api.dto.ReservationDto;
+import org.springframework.web.bind.annotation.*;
 import transport.co.api.dto.RouteDto;
-import transport.co.api.model.Customer;
-import transport.co.api.model.Reservation;
 import transport.co.api.model.Route;
-import transport.co.api.request.PersonRequest;
 import transport.co.api.request.RouteRequest;
 import transport.co.api.service.RouteService;
 
@@ -32,9 +24,12 @@ public class RouteController {
 
     @PostMapping("/routes")
     public ResponseEntity<RouteDto> addRoute(@RequestBody RouteRequest routeRequest){
-        Route route=routeService.addRoute(routeRequest);
+        Route route=routeService.addRouteWithStops(routeRequest);
         return new ResponseEntity<>(RouteDto.from(route), HttpStatus.OK);
+      //  return new ResponseEntity<>(route,HttpStatus.OK);
     }
 //    Reservation reservation = reservationService.addReservation(reservationRequest);
 //        return new ResponseEntity<>(ReservationDto.from(reservation), HttpStatus.OK);
+    @PutMapping("/routes")
+    public RouteDto editRoute(@RequestBody RouteDto routeDto){ return routeService.editRoute(routeDto);}
 }

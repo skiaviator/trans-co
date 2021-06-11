@@ -1,14 +1,13 @@
 package transport.co.api.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
-import transport.co.api.request.RouteRequest;
 import transport.co.api.request.StopRequest;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,10 +35,10 @@ public class Stop {
     private String name;
 
     @ManyToMany(mappedBy="routeStops")
-    private List<Route> routes;
+    private List<Route> routes=new ArrayList<>();
 
-  //  @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "stop")
-   // private List<Schedule> schedule;
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "stop")
+    private List<Schedule> schedule;
 
     public Stop (StopRequest stopRequest){
         this.name=stopRequest.getName();

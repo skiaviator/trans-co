@@ -7,7 +7,6 @@ import lombok.Setter;
 import transport.co.api.request.PersonRequest;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter

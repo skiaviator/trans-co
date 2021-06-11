@@ -13,7 +13,6 @@ import transport.co.api.request.ReservationRequest;
 import transport.co.api.service.CustomerService;
 import transport.co.api.service.ReservationService;
 
-import javax.swing.*;
 import java.util.List;
 
 @RestController

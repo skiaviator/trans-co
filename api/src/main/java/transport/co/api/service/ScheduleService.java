@@ -2,7 +2,6 @@ package transport.co.api.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import transport.co.api.model.Customer;
 import transport.co.api.model.Schedule;
 import transport.co.api.repository.ScheduleRepository;
 

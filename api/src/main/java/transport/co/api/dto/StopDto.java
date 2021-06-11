@@ -1,9 +1,7 @@
 package transport.co.api.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import transport.co.api.model.Reservation;
 import transport.co.api.model.Stop;
 
 import java.util.List;
@@ -21,6 +19,10 @@ public class StopDto {
         this.name=stop.getName();
     }
 
+    public StopDto(long id,String name){
+        this.id=id;
+        this.name=name;
+    }
     public static List<StopDto> fromList(List<Stop> stops){
         // List<ReservationDto> reservationDtos = new ArrayList<>();
 

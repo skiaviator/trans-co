@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import transport.co.api.dto.ReservationDto;
-import transport.co.api.model.Address;
 import transport.co.api.model.Reservation;
 
 import java.util.List;

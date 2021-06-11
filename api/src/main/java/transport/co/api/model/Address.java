@@ -6,7 +6,6 @@ import lombok.Setter;
 import transport.co.api.request.AddressRequest;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Embeddable
 @Getter
