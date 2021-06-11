@@ -20,9 +20,9 @@ public class Schedule {
     @SequenceGenerator(name="route_generator", sequenceName = "route_seq")
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "stop_id")
-    private Stop stop;
+ //   @ManyToOne
+  //  @JoinColumn(name = "stop_id")
+  //  private Stop stop;
 
     @ManyToOne
     @JoinColumn(name = "bus_id")

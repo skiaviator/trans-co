@@ -100,11 +100,11 @@ public class CustomerService implements ICustomerService {
         AppUser appUse2=new AppUser("Admin",passwordEncoder().encode("Adminowski"),"ROLE_ADMIN");
         appUserRepository.save(appUse2);
 
-        AppUser appUse3=new AppUser("Driver",passwordEncoder().encode("Bus"),"OFFICE_WORKER");
-        appUserRepository.save(appUse2);
+        AppUser appUse3=new AppUser("Driver",passwordEncoder().encode("Bus"),"ROLE_EMPLOYEE");
+        appUserRepository.save(appUse3);
 
-        AppUser appUse4=new AppUser("Office",passwordEncoder().encode("Worker"),"DRIVER");
-        appUserRepository.save(appUse2);
+        AppUser appUse4=new AppUser("Office",passwordEncoder().encode("Worker"),"ROLE_DRIVER");
+        appUserRepository.save(appUse4);
 
     }
 }

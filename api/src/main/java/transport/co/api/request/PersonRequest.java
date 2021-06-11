@@ -1,12 +1,12 @@
 package transport.co.api.request;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 public class PersonRequest {
 
     private AddressRequest addressRequest;

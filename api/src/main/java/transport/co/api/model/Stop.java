@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import transport.co.api.request.RouteRequest;
+import transport.co.api.request.StopRequest;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,10 +33,19 @@ public class Stop {
 //    @Column(nullable = true)
 //    private Stop nextStop;
 //
+    private String name;
+
     @ManyToMany(mappedBy="routeStops")
     private List<Route> routes;
 
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "stop")
-    private List<Schedule> schedule;
+  //  @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "stop")
+   // private List<Schedule> schedule;
+
+    public Stop (StopRequest stopRequest){
+        this.name=stopRequest.getName();
+    }
+
+    public Stop(){
+    }
 
 }
