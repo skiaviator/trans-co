@@ -27,7 +27,7 @@ public class StopService {
     public List<StopDto> getStops() {
         return stopRepository.findAllWithoutRoutes();
     }
-    public Stop getSingleStop(long id){
+    public Stop getSingleStop(Long id){
         return stopRepository.findById(id).orElseThrow();
     }
 
@@ -49,6 +49,7 @@ public class StopService {
         Stop stop = new Stop(stopRequest);
         return stopRepository.save(stop);
     }
+
     public List<Stop> addStopsWithRoute(List<StopRequest> stopRequests,Long id) {
 
         List<Stop> stops= new ArrayList<>();
@@ -57,5 +58,23 @@ public class StopService {
         }
         return stops;
     }
+
+    @Transactional
+    public StopDto editStop(StopDto stopDto) {
+        Stop stopEdited=stopRepository.findById(stopDto.getId()).orElseThrow();
+        stopEdited.setName(stopDto.getName());
+        return StopDto.from(stopEdited);
+    }
+
+    public boolean deleteStop(Long stopId) {
+        if(!ifExist(stopId)) return false;
+        stopRepository.deleteById(stopId);
+        return true;
+    }
+
+    public boolean ifExist(Long stopId){
+        return stopRepository.existsById(stopId);
+    }
+
 
 }

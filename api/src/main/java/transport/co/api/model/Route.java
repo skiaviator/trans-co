@@ -28,9 +28,12 @@ public class Route {
 
 
     //routeWDroogastrone
-    @JsonIgnore
+
     @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "route")
     private List<Reservation> reservation;
+
+     @OneToMany(cascade = CascadeType.REMOVE)
+     private List<Schedule> schedule=new ArrayList<>();
 
 
     @ManyToMany
@@ -43,6 +46,7 @@ public class Route {
     public Route (RouteRequest routeRequest){
         this.fee=routeRequest.getFee();
         this.routeName=routeRequest.getRouteName();
+        this.rideTime=routeRequest.getRideTime();
     }
     public Route(){}
 

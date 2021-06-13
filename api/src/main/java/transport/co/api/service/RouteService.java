@@ -8,6 +8,7 @@ import transport.co.api.model.Route;
 import transport.co.api.model.Stop;
 import transport.co.api.repository.RouteRepository;
 import transport.co.api.request.RouteRequest;
+import transport.co.api.request.StopRequest;
 
 import java.util.List;
 
@@ -41,7 +42,19 @@ public class RouteService {
         routeEdited.setRouteName(routeDto.getRouteName());
         routeEdited.setFee(routeDto.getFee());
         routeEdited.setRideTime(routeDto.getRideTime());
-        routeEdited.setRouteStops(routeEdited.getRouteStops());
+        routeEdited.setRouteStops(stopService.addStopsWithRoute(StopRequest.fromList(routeDto.getStopDtoList()),routeDto.getId()));
         return RouteDto.from(routeEdited);
     }
+
+    public boolean deleteRoute(Long routeId) {
+        if(!ifExist(routeId)) return false;
+        routeRepository.deleteById(routeId);
+        return true;
+    }
+
+    public boolean ifExist(Long routeId){
+        return routeRepository.existsById(routeId);
+    }
+
+
 }

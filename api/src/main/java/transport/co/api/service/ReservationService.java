@@ -41,4 +41,25 @@ public class ReservationService {
 
     }
 
+    public List<ReservationDto> getReservations() {
+        return reservationRepository.findAllWithRoutesDetails();
+    }
+
+    public ReservationDto editReservation(ReservationDto reservationDto) {
+        Reservation reservationEdited=reservationRepository.findById(reservationDto.getId()).orElseThrow();
+        reservationEdited.setDepart(reservationDto.getDepart());
+        reservationEdited.setReservationNr(reservationDto.getReservationNr());
+        reservationEdited.setReservationStatus(reservationDto.getReservationStatus());
+        return ReservationDto.from(reservationEdited);
+    }
+
+    public boolean deleteCustomer(Long reservationId) {
+        if(!ifExist(reservationId)) return false;
+        reservationRepository.deleteById(reservationId);
+        return true;
+    }
+
+    public boolean ifExist(Long reservationId){
+        return reservationRepository.existsById(reservationId);
+    }
 }

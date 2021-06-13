@@ -2,6 +2,7 @@ package transport.co.api.config;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -22,6 +23,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+    @Autowired
+    ActiveUserStore activeUserStore;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response, Authentication authentication)
@@ -29,6 +33,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         handle(request, response, authentication);
         clearAuthenticationAttributes(request);
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            LoggedUser user = new LoggedUser(authentication.getName(), activeUserStore);
+            session.setAttribute("user", user);
+        }
     }
 
     protected void handle(
@@ -53,10 +62,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
 
-      //  roleTargetUrlMap.put("ROLE_CUSTOMER", "http://localhost:63342/api/api.main/frontend/klient/reservacion.html");
-       // roleTargetUrlMap.put("ROLE_ADMIN", "http://localhost:63342/api/api.main/frontend/wlasciciel/manage_routes.html");
-      //  roleTargetUrlMap.put("DRIVER", "http://localhost:63342/api/api.main/frontend/kierowca/bus.html");
-       // roleTargetUrlMap.put("OFFICE_WORKER", "http://localhost:63342/api/api.main/frontend/pracownik_sekretariatu/reservation_for_client.html");
+        roleTargetUrlMap.put("ROLE_CUSTOMER", "http://localhost:63342/api/api.main/frontend/klient/reservacion.html");
+        roleTargetUrlMap.put("ROLE_ADMIN", "http://localhost:63342/api/api.main/frontend/wlasciciel/manage_routes.html");
+       roleTargetUrlMap.put("DRIVER", "http://localhost:63342/api/api.main/frontend/kierowca/bus.html");
+        roleTargetUrlMap.put("OFFICE_WORKER", "http://localhost:63342/api/api.main/frontend/pracownik_sekretariatu/reservation_for_client.html");
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {

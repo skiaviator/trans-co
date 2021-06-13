@@ -1,5 +1,6 @@
 package transport.co.api.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import transport.co.api.model.Stop;
@@ -7,8 +8,7 @@ import transport.co.api.model.Stop;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Setter
-@Getter
+@Data
 public class StopDto {
 
     private long id;
@@ -23,6 +23,9 @@ public class StopDto {
         this.id=id;
         this.name=name;
     }
+
+    public StopDto() { }
+
     public static List<StopDto> fromList(List<Stop> stops){
         // List<ReservationDto> reservationDtos = new ArrayList<>();
 
@@ -30,6 +33,11 @@ public class StopDto {
                 .map(stop -> new StopDto(stop))
                 .collect(Collectors.toList());
         return stopDtos;
+    }
+    public static StopDto from(Stop stop){
+        StopDto stopDto=new StopDto();
+        stopDto.setName(stop.getName());
+        return stopDto;
     }
 
 }

@@ -20,5 +20,9 @@ public class Config {
                 .build();
     }
 
+    @Bean
+    public ActiveUserStore activeUserStore(){
+        return new ActiveUserStore();
+    }
 
 }

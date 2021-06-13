@@ -28,7 +28,6 @@ public class AppUser implements UserDetails {
 
     private String role;
 
-    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "appUser")
     private Person person;
 

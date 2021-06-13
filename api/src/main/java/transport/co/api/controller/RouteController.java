@@ -1,5 +1,6 @@
 package transport.co.api.controller;
 
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +19,14 @@ public class RouteController {
     private final RouteService routeService;
 
     @GetMapping("/routes")
-    public List<Route> getRoutes(){
-        return routeService.getRoutes();
+    public ResponseEntity<List<RouteDto>> getRoutes(){
+        return new ResponseEntity<>(RouteDto.fromList(routeService.getRoutes()),HttpStatus.OK);
     }
 
+    @GetMapping("/routes/{id}")
+    public ResponseEntity<RouteDto> getSingleRoute(@PathVariable Long routeId){
+        return new ResponseEntity<>(RouteDto.from(routeService.getSingleRoute(routeId)),HttpStatus.OK);
+    }
     @PostMapping("/routes")
     public ResponseEntity<RouteDto> addRoute(@RequestBody RouteRequest routeRequest){
         Route route=routeService.addRouteWithStops(routeRequest);
@@ -30,6 +35,19 @@ public class RouteController {
     }
 //    Reservation reservation = reservationService.addReservation(reservationRequest);
 //        return new ResponseEntity<>(ReservationDto.from(reservation), HttpStatus.OK);
+
     @PutMapping("/routes")
-    public RouteDto editRoute(@RequestBody RouteDto routeDto){ return routeService.editRoute(routeDto);}
+    public ResponseEntity<RouteDto> editRoute(@RequestBody RouteDto routeDto){
+        return new ResponseEntity<>(routeService.editRoute(routeDto),HttpStatus.OK);}
+
+    @DeleteMapping("/routes")
+    public ResponseEntity<Long> deleteRoute(@RequestParam Long routeId){
+        boolean isRemoved = routeService.deleteRoute(routeId);
+
+        if (!isRemoved) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(routeId, HttpStatus.OK);
+    }
 }

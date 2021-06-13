@@ -5,6 +5,7 @@ import lombok.Setter;
 import transport.co.api.model.Customer;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -36,5 +37,12 @@ public class CustomerDto extends PersonDto{
         customerDto.setReservationDtoList(ReservationDto.fromList(customer.getReservations()));
         customerDto.setAddressDto(AddressDto.from(customer.getAddress()));
         return customerDto;
+    }
+
+    public static List<CustomerDto> fromList(List<Customer> customers) {
+        List<CustomerDto> customerDtos = customers.stream()
+                .map(customer -> from(customer))
+                .collect(Collectors.toList());
+        return customerDtos;
     }
 }

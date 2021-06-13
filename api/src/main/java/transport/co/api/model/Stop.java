@@ -9,6 +9,7 @@ import transport.co.api.request.StopRequest;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Setter
@@ -37,8 +38,15 @@ public class Stop {
     @ManyToMany(mappedBy="routeStops")
     private List<Route> routes=new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "stop")
-    private List<Schedule> schedule;
+   // @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "stop")
+   // private List<Schedule> schedule;
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "route_schedule_mapping",
+//            joinColumns = {@JoinColumn(name = "stop_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "schedule_id", referencedColumnName = "id")})
+//    @MapKey(name = "depart")
+//    private Map<String,Schedule> routeNameScheduleMap;
 
     public Stop (StopRequest stopRequest){
         this.name=stopRequest.getName();

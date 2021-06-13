@@ -18,8 +18,8 @@ public class Bus {
     @SequenceGenerator(name="bus_generator", sequenceName = "bus_seq")
     private long id;
 
-    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "bus")
-    private List<Schedule> schedule;
+   // @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "bus")
+   // private List<Schedule> schedule;
 
     @ManyToOne
     private PermParking permParking;

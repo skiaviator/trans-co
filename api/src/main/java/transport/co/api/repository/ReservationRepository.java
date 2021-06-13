@@ -14,4 +14,8 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     @Query("select new transport.co.api.dto.ReservationDto(r.id,r.reservationNr,r.reservationStatus,r.route.routeName,r.route.fee,r.depart) " +
             "from Reservation r where customer.id = ?1")
     List<ReservationDto> findAllWithCustomObjectsByCustomerId(long id);
+
+    @Query("select new transport.co.api.dto.ReservationDto(r.id,r.reservationNr,r.reservationStatus,r.route.routeName,r.route.fee,r.depart) " +
+            "from Reservation r")
+    List<ReservationDto> findAllWithRoutesDetails();
 }

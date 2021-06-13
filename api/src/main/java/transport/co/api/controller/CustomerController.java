@@ -20,19 +20,15 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
-    private final ReservationService reservationService;
-
 
     @GetMapping("/customers")
-    public List<Customer> getCustomers(){
-        return customerService.getCustomers();
+    public ResponseEntity<List<CustomerDto>> getCustomers(){
+        return new ResponseEntity<>(CustomerDto.fromList(customerService.getCustomers()),HttpStatus.OK);
     }
 
     @GetMapping("/customers/{id}")
-    public Customer getSingleCustomer(@PathVariable long id){ return customerService.getSingleCustomer(id);}
-
-    @GetMapping("/customers/{id}/reservations")
-    public List<ReservationDto> getCustomerReservationsWithRoutes(@PathVariable long id){ return reservationService.getCustomerReservationsWithRoutes(id);}
+    public ResponseEntity<CustomerDto> getSingleCustomer(@PathVariable Long id){
+        return new ResponseEntity<>(CustomerDto.from(customerService.getSingleCustomer(id)),HttpStatus.OK);}
 
     @PostMapping("/customers")
     public ResponseEntity<CustomerDto> addCustomer(@RequestBody PersonRequest personRequest){
@@ -40,17 +36,21 @@ public class CustomerController {
         return new ResponseEntity<>(CustomerDto.from(customer),HttpStatus.OK);
     }
 
-    @PostMapping("/customers/{id}/reservations")
-    public ResponseEntity<ReservationDto> addReservation(@RequestBody ReservationRequest reservationRequest){
-        Reservation reservation = reservationService.addReservation(reservationRequest);
-        return new ResponseEntity<>(ReservationDto.from(reservation), HttpStatus.OK);
-    }
 
     @PutMapping("/customers")
-    public Customer editCustomer(@RequestBody Customer customer){ return customerService.editCustomer(customer);}
+    public ResponseEntity<CustomerDto> editCustomer(@RequestBody CustomerDto customerDto){
+        return new ResponseEntity<>(customerService.editCustomer(customerDto),HttpStatus.OK);}
 
-    @DeleteMapping("/customers/{id}")
-    public void deleteCustomer(@PathVariable long id){customerService.deleteCustomer(id);}
+    @DeleteMapping("/customers")
+    public ResponseEntity<Long> deleteCustomer(@RequestParam Long customerId){
+        boolean isRemoved = customerService.deleteCustomer(customerId);
+
+        if (!isRemoved) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(customerId, HttpStatus.OK);
+    }
 }
 
 

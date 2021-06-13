@@ -9,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
+import transport.co.api.dto.CustomerDto;
 import transport.co.api.logic.ICustomerService;
+import transport.co.api.model.Address;
 import transport.co.api.model.AppUser;
 import transport.co.api.model.Customer;
 import transport.co.api.repository.AppUserRepository;
@@ -26,9 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerService implements ICustomerService {
 
-    private final ReservationRepository reservationRepository;
     private final CustomerRepository customerRepository;
-    private final RouteRepository routeRepository;
     private final AppUserRepository appUserRepository;
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
@@ -47,19 +47,21 @@ public class CustomerService implements ICustomerService {
 
 
     @Transactional
-    public Customer editCustomer(Customer customer) {
-        Customer customerEdited = customerRepository.findById(customer.getId()).orElseThrow();
-        customerEdited.setAddress(customer.getAddress());
-        customerEdited.setBirthdate(customer.getBirthdate());
-        customerEdited.setEmail(customer.getEmail());
-        customerEdited.setFirstname(customer.getFirstname());
-        customerEdited.setSurname(customer.getSurname());
-        customerEdited.setPhonenr(customer.getPhonenr());
-        return customerEdited;
+    public CustomerDto editCustomer(CustomerDto customerDto) {
+        Customer customerEdited = customerRepository.findById(customerDto.getId()).orElseThrow();
+        customerEdited.setAddress(Address.from(customerDto.getAddressDto()));
+        customerEdited.setBirthdate(customerDto.getBirthdate());
+        customerEdited.setEmail(customerDto.getEmail());
+        customerEdited.setFirstname(customerDto.getFirstname());
+        customerEdited.setSurname(customerDto.getSurname());
+        customerEdited.setPhonenr(customerDto.getPhonenr());
+        return CustomerDto.from(customerEdited);
     }
 
-    public void deleteCustomer(long id) {
-        customerRepository.deleteById(id);
+    public boolean deleteCustomer(long customerId) {
+        if(!ifExist(customerId)) return false;
+        customerRepository.deleteById(customerId);
+        return true;
     }
 
 
@@ -81,6 +83,10 @@ public class CustomerService implements ICustomerService {
 
         return customer;
 
+    }
+
+    public boolean ifExist(Long customerId){
+        return customerRepository.existsById(customerId);
     }
 
     private boolean emailExists(String email){
