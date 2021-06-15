@@ -21,8 +21,8 @@ import java.util.Map;
 public class Stop {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_generator")
-    @SequenceGenerator(name="route_generator", sequenceName = "route_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stop_generator")
+    @SequenceGenerator(name="stop_generator", sequenceName = "stop_seq")
     private long id;
 
 //    @OneToOne(mappedBy= "nextStop", cascade = CascadeType.ALL)

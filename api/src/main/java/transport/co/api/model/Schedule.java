@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 public class Schedule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_generator")
-    @SequenceGenerator(name="route_generator", sequenceName = "route_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "schedule_generator")
+    @SequenceGenerator(name="schedule_generator", sequenceName = "schedule_seq")
     private long id;
 
   // @ManyToOne

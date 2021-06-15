@@ -24,8 +24,8 @@ public class RouteController {
     }
 
     @GetMapping("/routes/{id}")
-    public ResponseEntity<RouteDto> getSingleRoute(@PathVariable Long routeId){
-        return new ResponseEntity<>(RouteDto.from(routeService.getSingleRoute(routeId)),HttpStatus.OK);
+    public ResponseEntity<RouteDto> getSingleRoute(@PathVariable Long id){
+        return new ResponseEntity<>(RouteDto.from(routeService.getSingleRoute(id)),HttpStatus.OK);
     }
     @PostMapping("/routes")
     public ResponseEntity<RouteDto> addRoute(@RequestBody RouteRequest routeRequest){
@@ -50,4 +50,5 @@ public class RouteController {
 
         return new ResponseEntity<>(routeId, HttpStatus.OK);
     }
+
 }

@@ -35,8 +35,8 @@ public class StopController {
     }
 
     @GetMapping("/stops/{id}")
-    public ResponseEntity<StopDto> getSingleStop(@PathVariable Long stopId){
-        return new ResponseEntity<>(StopDto.from(stopService.getSingleStop(stopId)),HttpStatus.OK);
+    public ResponseEntity<StopDto> getSingleStop(@PathVariable Long id){
+        return new ResponseEntity<>(StopDto.from(stopService.getSingleStop(id)),HttpStatus.OK);
     }
 
     @PutMapping("/stops")

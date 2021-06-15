@@ -32,9 +32,11 @@ public class Route {
     @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "route")
     private List<Reservation> reservation;
 
-     @OneToMany(cascade = CascadeType.REMOVE)
-     private List<Schedule> schedule=new ArrayList<>();
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<Schedule> schedule=new ArrayList<>();
 
+    @OneToMany(mappedBy="route")
+    private List<Bus> buses=new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

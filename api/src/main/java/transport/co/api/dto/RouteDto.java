@@ -21,6 +21,8 @@ public class RouteDto {
 
     private List<ScheduleDto> scheduleDtos;
 
+    private List<BusDto> busDtos;
+
     public RouteDto(){
     }
 
@@ -33,6 +35,7 @@ public class RouteDto {
         routeDto.setRideTime(route.getRideTime());
         routeDto.setStopDtoList(StopDto.fromList(route.getRouteStops()));
         routeDto.setScheduleDtos(ScheduleDto.fromList(route.getSchedule()));
+        routeDto.setBusDtos(BusDto.fromList(route.getBuses()));
         return routeDto;
     }
 

@@ -17,13 +17,21 @@ import javax.persistence.*;
 @Table(name="drivers")
 public class Driver extends Person{
 
-
+private Double salary;
 //    @ManyToMany
 //    @JoinTable(
 //            name = "driver_bus",
 //            joinColumns = @JoinColumn(name = "driver_id"),
 //            inverseJoinColumns = @JoinColumn(name = "bus_id"))
 //    private List<Bus> drivedBuses;
+
+    @ManyToOne
+    @JoinColumn(name = "bus_id")
+    private Bus bus;
+
+    public Driver() {
+    }
+
     public Driver(PersonRequest personRequest){
         super(personRequest);
     }

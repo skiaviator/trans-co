@@ -31,8 +31,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedule/{id}")
-    public ResponseEntity<ScheduleDto> getSingleSchedule(@PathVariable Long scheduleId){
-        return new ResponseEntity<>(ScheduleDto.from(scheduleService.getSingleSchedule(scheduleId)),HttpStatus.OK);
+    public ResponseEntity<ScheduleDto> getSingleSchedule(@PathVariable Long id){
+        return new ResponseEntity<>(ScheduleDto.from(scheduleService.getSingleSchedule(id)),HttpStatus.OK);
     }
 
     @PostMapping("/schedule")
