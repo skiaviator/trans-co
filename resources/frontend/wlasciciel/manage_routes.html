@@ -10,32 +10,37 @@
         <div id="up">
 
             <ul>
-                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+                <h1>Firma transportowa "KKBus sp. z o. o."</h1>
                 <li><a href="manage_workers.html">ZARZĄDZAJ KLIENTAMI</a></li>
                 <li><a href="#">ZARZĄDZAJ TRASAMI</a></li> 
 <!--                <li><a href="manage_presents.html">ZARZĄDAJ NAGRODAMI</a></li> -->
 <!--                <li><a href="manage_secretariat_calendar.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
 <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
 <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
-<!--                <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>  -->
+                <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>
                 <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
             </ul>
          </div>
          <div id="description">
              <h2>Poniżej podano aktualne trasy:</h2>
-             <pre id="change" > trasy </pre>
+             <pre id="change" style="margin-left: -4cm" > Brak tras </pre>
              <script>
                  // pobieranie tras
                  var odp;
                  async function get_routes()
                  {
-                     await axios.get('http://localhost:8080/routes')
+var newNumber;
+
+                             await axios.get('http://localhost:8080/routes')
                          .then((response) => {
                              console.log(response.data);
                              console.log(response.status);
                              stat = response.data;
+                             dane_pobrane = response.data;
+                             dane_zmienione = JSON.stringify(dane_pobrane);
+                             dane_zmienione2 = JSON.parse(dane_zmienione);
                              let numer =JSON.stringify(Object.keys(stat))
-                             let newNumber = numer.substr((numer.lastIndexOf("]")-2),1) //numer ostatniego dto
+                             newNumber = numer.substr((numer.lastIndexOf("]")-2),1) //numer ostatniego dto
                              let dane = []; //tablica na dane
                              let wypisz = "";
                              for (let i=0; i <parseInt(newNumber)+1; i++)
@@ -54,21 +59,26 @@
                                   przystanki[i] = stops.substring(stops.indexOf('name')+7,stops.indexOf('}')-1);
                                   stops = stops.slice(stops.indexOf('}')+2, stops.lastIndexOf('}')+1);
                                      }
-
-                                 dane[i]=["ID: "+ (i+1)+". "+"Trasa: "+ routeName+". "+"Cena: "+fee+" zł. "+"Czas: "+time +
-                                 "min.\nPrzystanki: "+przystanki];
+                                 dane[i]=["ID: "+ dane_zmienione2[i].id+". "+"Trasa: "+ routeName+". "+"Cena: "+fee+" zł. "+"Czas: "+time +
+                                 "min. Przystanki: "+przystanki+"\nGodziny odjazdów: "];
                                  wypisz += dane[i]+"\n";
                              }
 
                              if (wypisz=="")
-                                 return document.getElementById("change").innerHTML = "Brak tras";
+                                  document.getElementById("change").innerHTML = "Brak tras";
                              else
-                                 return  document.getElementById("change").innerHTML = wypisz;
+                                  document.getElementById("change").innerHTML = wypisz;
 
                          })
                          .catch((error) => {
-                             alert('Wystąpił błąd!')
+                          //   alert('Wystąpił błąd!')
                          });
+                    // for (let i=0; i <parseInt(newNumber)+1; i++){
+                    // await axios.get('http://localhost:8080/schedule/1')
+                    //      .then((response) => {
+                    //          console.log(response.data);
+                    //      })
+                  //   }
                  }
                  get_routes();
              </script>
@@ -110,6 +120,7 @@
                         stat = response.status;
                         alert('Pomyślnie dodano trasę!')
                         get_routes();
+                         window.location = location.href;
                     })
                     .catch((error) => {
                         alert('Wystąpił błąd!')
@@ -134,7 +145,7 @@
             }
         </script>
                 <div id = form1>
-                    <form id="form2">
+                    <form id="form2" >
                     <h4>Dodaj nową trasę:</h4>
                     <label>Nazwa trasy:</label><br>
                     <input type="text" id="trasa"> <br>
@@ -146,8 +157,8 @@
                     <input type="text" id="stop1" name = "stop"> <br>
                     </form>
                     <div id="form3" style="margin-left: 15cm" >
-                        <input type ="button" name =1 id = "add" value="Dodaj przystanek" onclick="add_stop()"><br><br>
-                        <input type ="submit"  id = "dodaj" value="Dodaj trasę" onclick="add_route();">
+                        <input type ="button" class="button1" name =1 id = "add" value="Dodaj przystanek" onclick="add_stop()"><br><br>
+                        <input type ="submit"  class="button"  id = "dodaj" value="Dodaj trasę" onclick="add_route()" >
                     </div>
                 </div>
 
@@ -155,33 +166,47 @@
     </div>
                 <div id = form6>
                     <script>
-function rozklad(){
-                        var start = document.getElementById('arrivalStart').value;
-                        var koniec = document.getElementById('arrivalEnd').value;
-                        var time = document.getElementById('odjazd1').value;
-                        var year = 2221;
-                        var month = 6;
-                        var day = 18;
-                        var rozklad = [{depart:new Date(year, month, day)+'T'+time}];
+                        async function rozklad(){
 
-                        while(rozklad!=[{depart:new Date(2021, 07, 1)+'T'}]) {
-                            rozklad.push({depart:new Date(year, month, ++day)+'T'});
-                        }
-                        console.log(rozklad);
+        // dodawanie tras
+        var id_godz = document.getElementById('id_godz').value;
+        var dataodj = document.getElementById('arrivalStart').value;
+        var odj1 = document.getElementById('odjazd1').value;
+
+        dane =
+
+
+            [ {
+                depart: "2021-06-17T15:53:06.230Z"
+            }
+            ]
+
+
+        await axios.post('http://localhost:8080/schedule?routeId='+id_godz, JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
+            .then((response) => {
+                console.log(response.data);
+                console.log(response.status)
+                stat = response.status;
+                alert('Pomyślnie dodano godzinę odjazdu!')
+                get_routes();
+            })
+            .catch((error) => {
+                alert('Wystąpił błąd!')
+            });
+
+
 }
 
                     </script>
                     <form>
                         <h4>Dodaj godziny odjazdu dla trasy:</h4>
                         <label >Podaj identyfikator trasy:</label><br>
-                        <input type="number" id="id"> <br>
-                        <label >Od kiedy?:</label><br>
+                        <input type="number" id="id_godz"> <br>
+                        <label >Dzień podróży:</label><br>
                         <input type="date" id="arrivalStart"> <br>
-                        <label >Do kiedy?:</label><br>
-                        <input type="date" id="arrivalEnd"> <br>
-                        <label >Jaka godzina?:</label><br>
-                        <input type="time" id="odjazd1"> <br>
-                        <input type ="submit" id = "add_hour" value="Dodaj rozkład" onclick="rozklad()">
+                        <label >Godzina odjazdu:</label><br>
+                        <input type="time" id="odjazd1"> <br><br>
+                        <input type ="button" class="button" id = "add_hour" value="Dodaj rozkład" onclick="rozklad()">
                         </form>
                     </div>
                     <form>
@@ -194,7 +219,7 @@ function rozklad(){
                         <input type="time" id="newarrival"> <br><br>
                         <label >Podaj nową godzinę przyjazdu:</label><br>
                         <input type="time" id="newdeparture"> <br><br>
-                        <input type ="submit" id = "usun" value="Usuń godzinę odjazdu z bazy">
+                        <input type ="submit" class="button" id = "usun" value="Usuń godzinę odjazdu z bazy">
                         </form>
 
                         <form>
@@ -216,7 +241,7 @@ function rozklad(){
                             <h4>Usuń trasę:</h4>
                             <label >Podaj identyfikator trasy:</label><br>
                             <input type="number" id="id_trasy"> <br><br>
-                            <input type ="submit" id = "usun_trase" value="Usuń trasę" onclick="delete_route()">
+                            <input type ="submit" class="button" id = "usun_trase" value="Usuń trasę" onclick="delete_route()">
                             </form>
     </body>
     </html>

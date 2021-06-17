@@ -8,7 +8,7 @@
         <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
         <div id="up"> 
             <ul>
-                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+                <h1>Firma transportowa "KKBus sp. z o. o."</h1>
                 <li><a href="distribution.html">TRASY</a></li>
                 <li><a href="contact.html">KONTAKT</a></li>
                 <li><a href="http://localhost:8080/login">ZALOGUJ SIĘ</a></li>
@@ -19,7 +19,7 @@
 
         <div id="description">
             <h2>Poniżej podano aktualne trasy:</h2>
-            <pre id="change" onclick="get_routes()"> Kliknij tutaj, aby wyświetlić aktualne trasy </pre>
+            <pre id="change" onclick="get_routes()">Brak tras </pre>
             <script>
                 // pobieranie tras
                 let stat =
@@ -65,7 +65,7 @@ else
 
                         })
                         .catch((error) => {
-                            alert('Wystąpił błąd!')
+                          //  alert('Wystąpił błąd!')
                         });
 
                 }

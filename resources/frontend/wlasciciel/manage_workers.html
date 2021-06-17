@@ -10,20 +10,20 @@
         <div id="up"> 
             
             <ul>
-                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+                <h1>Firma transportowa "KKBus sp. z o. o."</h1>
                 <li><a href="#">ZARZĄDZAJ KLIENTAMI </a></li>
                 <li><a href="manage_routes.html">ZARZĄDZAJ TRASAMI</a></li> 
 <!--                <li><a href="manage_presents.html">ZARZĄDAJ NAGRODAMI</a></li> -->
 <!--                <li><a href="manage_secretariat_calendar.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
 <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
 <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
-<!--                <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>  -->
+                <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>
                 <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
             </ul>
          </div>
          <div id="description">
              <h2>Poniżej podano zarejestrowanych klientów:</h2>
-             <pre id="change" onclick="get_clients()"> Kliknij tutaj, aby wyświetlić dane klientów</pre> </div>
+             <pre id="change"> Brak klientów</pre> </div>
         <script>
             // pobieranie danych klientów
             let stat;
@@ -39,6 +39,8 @@
                         let numer = JSON.stringify(Object.keys(stat));
                        // alert(numer.substr((numer.lastIndexOf("]")-2),1));
                         let newNumber = numer.substr((numer.lastIndexOf("]")-2),1) //numer ostatniego dto
+                        try{
+                        parseInt(newNumber);
                         let dane = []; //tablica na dane
                         let wypisz = "";
                          for (let i=0; i <parseInt(newNumber)+1; i++)
@@ -70,11 +72,11 @@
 
                     })
                     .catch((error) => {
-                        alert('Wystąpił błąd!')
+
                     });
 
             }
-            get_clients();
+           get_clients();
         </script>
            </div>
      <script>
@@ -99,7 +101,7 @@
                    <h4>Usuń klienta z bazy:</h4>
                    <label >Podaj numer ID klienta:</label><br>
                    <input type="number" id="id_klienta"> <br><br>
-                   <input type ="submit" id = "usun" value="Usuń klienta" onclick = "delete_customer()">
+                   <input type ="submit" class = "button" id = "usun" value="Usuń klienta" onclick = "delete_customer()">
                </form>
            </div>
 
