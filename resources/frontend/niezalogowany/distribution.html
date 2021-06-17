@@ -18,58 +18,71 @@
 
 
         <div id="description">
-            <h2>Poniżej podano aktualne trasy:</h2>
-            <pre id="change" onclick="get_routes()">Brak tras </pre>
+            <h2 style = "margin-left: -20px">Poniżej podano aktualny rozkład jazdy:</h2>
+            <pre id="change" style="margin-left: -4cm" > Brak tras </pre>
             <script>
                 // pobieranie tras
-                let stat =
-                    {
-                        fee: 0,
-                        id: 0,
-                        reservation: [],
-                        routeName: "",
-                        routeStops: []
-                    };
                 var odp;
                 async function get_routes()
                 {
+                    var newNumber;
+
                     await axios.get('http://localhost:8080/routes')
                         .then((response) => {
                             console.log(response.data);
                             console.log(response.status);
                             stat = response.data;
-
-                            let numer = JSON.stringify(Object.keys(stat));
-                            //alert(numer.substr((numer.lastIndexOf("]")-2),1));
-                            let newNumber = numer.substr((numer.lastIndexOf("]")-2),1) //numer ostatniego dto
+                            dane_pobrane = response.data;
+                            dane_zmienione = JSON.stringify(dane_pobrane);
+                            dane_zmienione2 = JSON.parse(dane_zmienione);
+                            let numer =JSON.stringify(Object.keys(stat))
+                            newNumber = numer.substr((numer.lastIndexOf("]")-2),1) //numer ostatniego dto
                             let dane = []; //tablica na dane
                             let wypisz = "";
                             for (let i=0; i <parseInt(newNumber)+1; i++)
                             {
                                 odp = JSON.stringify(Object.entries(stat[i]));
+                                // alert(odp);
                                 let fee  = odp.substring(odp.indexOf('fee')+5,odp.indexOf('routeName')-4);
-                                let routeName  = odp.substring(odp.indexOf('routeName')+12,odp.indexOf('reservation')-5);
-                                dane[i]=["Numer: "+ (i+1)+". "+"Trasa: "+ routeName+". "+"Cena: "+fee+" zł."];
+                                let routeName  = odp.substring(odp.indexOf('routeName')+12,odp.indexOf('rideTime')-5);
+                                let time  = odp.substring(odp.indexOf('rideTime')+11,odp.indexOf('stopDtoList')-5);
+                                let stops = odp.substring(odp.indexOf('stopDtoList')+14,odp.indexOf('scheduleDtos')-5);
+                                let test = (stops.match(/name/g)|| []).length;
+                                var przystanki = [];
+                                for(let i=0; i<test;i++)
+                                {
+
+                                    przystanki[i] = stops.substring(stops.indexOf('name')+7,stops.indexOf('}')-1);
+                                    stops = stops.slice(stops.indexOf('}')+2, stops.lastIndexOf('}')+1);
+                                }
+                                var tablica=[];
+                                for(let j=0; j<dane_zmienione2[i].scheduleDtos.length;j++)
+                                    tablica[j] = "["+dane_zmienione2[i].scheduleDtos[j].id+"]"+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+4,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T') )+"."+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+1,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T')-3 )+" godz."+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+7,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T')+6 );
+
+
+
+                                console.log(tablica);
+                                dane[i]=["ID: "+ dane_zmienione2[i].id+". "+"Trasa: "+ routeName+". "+"Cena: "+fee+" zł. "+"Czas: "+time +
+                                "min. Przystanki: "+przystanki+"\nOdjazdy: "+ tablica];
                                 wypisz += dane[i]+"\n";
-
                             }
-if (wypisz=="")
-    return document.getElementById("change").innerHTML = "Brak tras";
-else
-                            return  document.getElementById("change").innerHTML = wypisz;
-                            //   for (let i=0; i < parseInt(newNumber)+1; i++)
-                            //   {
 
-                            //       alert(dane[i]);
-                            //   }
+                            if (wypisz=="")
+                                document.getElementById("change").innerHTML = "Brak tras";
+                            else
+                                document.getElementById("change").innerHTML = wypisz;
 
                         })
-                        .catch((error) => {
-                          //  alert('Wystąpił błąd!')
-                        });
-
+                    // .catch((error) => {
+                    //     alert('Wystąpił błąd!')
+                    // });
+                    // for (let i=0; i <parseInt(newNumber)+1; i++){
+                    // await axios.get('http://localhost:8080/schedule/1')
+                    //      .then((response) => {
+                    //          console.log(response.data);
+                    //      })
+                    //   }
                 }
-
                 get_routes();
             </script>
         </div>

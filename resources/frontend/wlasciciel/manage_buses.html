@@ -22,7 +22,7 @@
             </ul>
         </div>
             <div id="description"> <h2>Poniżej podano dane posiadanych pojazdów:</h2>
-                <pre id = "change">
+                <pre id = "change" style = "margin-left: -11cm">
                    Brak pojazdów
                </pre>
             </div>
@@ -65,7 +65,7 @@
                                     document.getElementById("change").innerHTML = wypisz;
 
                               })
-                            .catch(async (error) => {
+                            .catch( (error) => {
 
                             });
 
@@ -110,7 +110,7 @@
                                        get_buses();
                                    })
                                    .catch((error) => {
-                                       alert('Wystąpił błąd!')
+
                                    });
                            }
 
