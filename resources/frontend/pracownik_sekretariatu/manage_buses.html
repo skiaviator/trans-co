@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+    <html>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+<link rel="stylesheet" href="/api/api.main/adds/style.css">
+    <div id="webpage">
+        <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
+        <div id="up"> 
+            
+            <ul>
+                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+                <li><a href="secretariat_calendar.html">WYŚWIETL GRAFIK SEKRETARIATU</a></li>               
+                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> 
+                <li><a href="reservacion_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>
+                <li><a href="#">ZARZĄDZAJ POJAZDAMI</a></li>  
+                <li><a href="#">WYLOGUJ SIĘ</a></li> 
+            </ul>
+         </div>
+         <div id="description"> <h3>Poniżej podano dane posiadanych pojazdów:</h3> </div>
+         <div id = form method ="GET">
+            <pre>
+                (dane z bazy)
+            </pre>
+            </div>
+            <div id = form1>
+                
+                <form action="manage_buses.html" method ="GET">  
+                <h4>Dodaj nowy pojazd do bazy:</h4>             
+                <label >Marka busa:</label><br>
+                <input type="text" id="marka"> <br><br>
+                <label >Model busa:</label><br>
+                <input type="text" id="model"> <br><br>
+                <label >Rok produkcji:</label><br>
+                <input type="number" id="rocznik"> <br><br>
+                <label >Przypisany kierowca:</label><br>
+                <input type="text" id="kierowca"> <br><br>
+                <input type ="submit" id = "dodaj" value="Dodaj pojazd">
+                </form>
+            </div>
+            <div id = form1>
+                <form action="manage_buses.html" method ="GET">
+                    <h4>Zmień dane pojazdu:</h4>
+                    <label >Podaj identyfikator pojazdu z bazy:</label><br>
+                    <input type="number" id="id"> <br><br>
+                    <label >Marka busa:</label><br>
+                    <input type="text" id="marka"> <br><br>
+                    <label >Model busa:</label><br>
+                    <input type="text" id="model"> <br><br>
+                    <label >Rok produkcji:</label><br>
+                    <input type="number" id="rocznik"> <br><br>
+                    <label >Przypisany kierowca:</label><br>
+                    <input type="text" id="kierowca"> <br><br>
+                    <input type ="submit" id = "aktualizuj" value="Aktualizuj dane pojazdu">
+                    </form>
+                </div>
+                    <form action="manage_buses.html" method ="GET">
+                        <h4>Usuń pojazd z bazy:</h4>
+                        <label >Podaj identyfikator pojazdu z bazy:</label><br>
+                        <input type="number" id="id"> <br><br>
+                        <input type ="submit" id = "usun" value="Usuń pojazd z bazy">
+                        </form>
+                    
+    </body>
+    </html>
