@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import transport.co.api.dto.RouteDto;
 import transport.co.api.dto.ScheduleDto;
 import transport.co.api.dto.StopDto;
+import transport.co.api.model.Route;
 import transport.co.api.model.Schedule;
 import transport.co.api.repository.ScheduleRepository;
 import transport.co.api.request.ScheduleRequest;
@@ -30,8 +31,9 @@ public class ScheduleService {
         return scheduleRepository.findById(id).orElseThrow();
     }
 
+    @Transactional
     public List<Schedule> setRouteSchedule(List<ScheduleRequest> scheduleRequests, Long routeId) {
-        routeService.getSingleRoute(routeId).setSchedule(scheduleRepository.saveAll(Schedule.fromList(scheduleRequests)));
+        routeService.getSingleRoute(routeId).getSchedule().addAll(scheduleRepository.saveAll(Schedule.fromList(scheduleRequests)));
         return routeService.getSingleRoute(routeId).getSchedule();
     }
 
@@ -48,10 +50,13 @@ public class ScheduleService {
        return ScheduleDto.fromList(schedules);
     }
 
+    @Transactional
     public boolean deleteRouteSchedule(Long routeId) {
       //  boolean isRemoved = routeService.getSingleRoute(routeId)
         if(!routeService.ifExist(routeId)) return false;
-        List<Schedule> schedules =routeService.getSingleRoute(routeId).getSchedule();
+        Route route = routeService.getSingleRoute(routeId);
+        List<Schedule> schedules =route.getSchedule();
+        route.setSchedule(null);
         List<Long> ids = schedules.stream()
                 .map(schedule -> schedule.getId())
                 .collect(Collectors.toList());

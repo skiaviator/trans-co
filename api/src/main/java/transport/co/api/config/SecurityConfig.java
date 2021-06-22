@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import transport.co.api.service.UserDetailsServiceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -60,12 +63,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
 //                .exceptionHandling()
 //                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+
     }
 
     @Bean
     public AuthenticationSuccessHandler customAuthenticationSuccesHandler(){
         return new CustomAuthenticationSuccessHandler();
     }
+
 
 
 }

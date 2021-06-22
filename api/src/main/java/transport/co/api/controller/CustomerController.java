@@ -52,6 +52,27 @@ public class CustomerController {
         return new ResponseEntity<>(customerId, HttpStatus.OK);
     }
 
+    @PatchMapping("/customers/{id}/grant-points")
+    public ResponseEntity<?> grantPoints(@PathVariable Long id, @RequestParam Integer points){
+        boolean hasIncreased=customerService.grantPoints(id,points);
+
+        if (!hasIncreased){
+            return new ResponseEntity<>("Points could not be granted!",HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>("Points have been granted!",HttpStatus.OK);
+    }
+
+    @PatchMapping("/customers/{id}/grant-not-realized")
+    public ResponseEntity<?> grantNotRealized(@PathVariable Long id){
+        boolean hasGranted=customerService.grantNotRealized(id);
+
+        if (!hasGranted){
+            return new ResponseEntity<>("Number of not realized reservations could not been increased!",HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>("Number of not realized reservations has been increased!",HttpStatus.OK);
+    }
 
 }
 

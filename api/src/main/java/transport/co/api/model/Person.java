@@ -2,6 +2,7 @@ package transport.co.api.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Check;
 import transport.co.api.request.PersonRequest;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
+@Check( constraints = "CASE WHEN phonenr IS NOT NULL THEN LENGTH(phonenr) = 9 ELSE true END")
 public class Person {
 
     @Id

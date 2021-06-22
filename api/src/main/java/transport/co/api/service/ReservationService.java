@@ -18,7 +18,6 @@ import java.util.List;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final RouteRepository routeRepository;
     private final CustomerService customerService;
     private final RouteService routeService;
     private final ScheduleService scheduleService;

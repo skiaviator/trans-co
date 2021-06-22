@@ -23,4 +23,5 @@ public abstract class PersonDto {
     private Date birthdate;
 
     private String phonenr;
+
 }

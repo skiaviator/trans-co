@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import transport.co.api.dto.CustomerDto;
+import transport.co.api.dto.PersonDto;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -16,6 +18,7 @@ import java.util.Collections;
 @Getter
 @Table(name = "userdetails")
 public class AppUser implements UserDetails {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import transport.co.api.dto.CustomerDto;
 import transport.co.api.logic.ICustomerService;
-import transport.co.api.model.Address;
-import transport.co.api.model.AppUser;
-import transport.co.api.model.Customer;
+import transport.co.api.model.*;
 import transport.co.api.repository.AppUserRepository;
 import transport.co.api.repository.CustomerRepository;
 import transport.co.api.repository.ReservationRepository;
@@ -112,4 +110,23 @@ public class CustomerService implements ICustomerService {
         appUserRepository.save(appUse4);
 
     }
+
+    @Transactional
+    public boolean grantPoints(Long id, Integer points) {
+        if(!ifExist(id)) return false;
+        if(points<=0||points==null) return false;
+        Customer customer= customerRepository.findById(id).orElseThrow();
+        Integer currentPoints=customer.getPoints();
+        customer.setPoints(currentPoints+points);
+        return true;
+    }
+
+    @Transactional
+    public boolean grantNotRealized(Long id) {
+        if(!ifExist(id)) return false;
+        Customer customer= customerRepository.findById(id).orElseThrow();
+        customer.setNotrealized(customer.getNotrealized()+1);
+        return true;
+    }
+
 }
