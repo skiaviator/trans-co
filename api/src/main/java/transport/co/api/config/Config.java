@@ -7,7 +7,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import static java.util.Collections.singletonList;
 
 @Configuration
 @EnableSwagger2
@@ -20,4 +19,10 @@ public class Config {
                 .paths(PathSelectors.regex ( "^(?!/(error).*$).*$"))
                 .build();
     }
+
+    @Bean
+    public ActiveUserStore activeUserStore(){
+        return new ActiveUserStore();
+    }
+
 }

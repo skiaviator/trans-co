@@ -1,35 +1,51 @@
 package transport.co.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import transport.co.api.dto.StopDto;
+import transport.co.api.request.ScheduleRequest;
 
 import javax.persistence.*;
-import java.sql.Time;
+
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
 @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name="schedules")
 public class Schedule {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "schedule_generator")
+    @SequenceGenerator(name="schedule_generator", sequenceName = "schedule_seq")
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="route_id",nullable=false)
-    private Route route;
+  // @ManyToOne
+ // @JoinColumn(name = "stop_id")
+  // private Stop stop;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "bus_id")
+//    private Bus bus;
 
-    @ManyToOne
-    @JoinColumn(name="bus_id",nullable=false)
-    private Bus bus;
 
-    private Time arrive;
+    //private Time arrive;
 
-    private Time depart;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date depart;
+
+    public Schedule() {
+    }
+
+    private Schedule(ScheduleRequest scheduleRequest){
+        this.depart=scheduleRequest.getDepart();
+    }
+    public static List<Schedule> fromList(List<ScheduleRequest> scheduleRequests){
+        List<Schedule> schedules = scheduleRequests.stream()
+                .map(scheduleRequest -> new Schedule(scheduleRequest))
+                .collect(Collectors.toList());
+        return schedules;
+    }
 }

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+<link rel="stylesheet" href="/api/api.main/adds/style.css">
+<div id="webpage">
+    <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
+    <div id="up">
+
+        <ul>
+            <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
+            <li><a href="passengers.html">WYŚWIETL LISTĘ PASAŻERÓW</a></li>
+            <li><a href="bus.html">INFORMACJA O POJAZDACH</a></li>
+            <li><a href="calendar.html">MOJE DANE</a></li>
+            <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
+        </ul>
+    </div>
+    <div id="description"> <h2>Poniżej zostały wyświetlone twoje dane. Możesz je edytować.</h2> </div>
+    <div id="form1">
+        <script>
+            var id_user;
+            async function get_data() {
+
+                await axios.get('http://localhost:8080/username')
+                    .then((response) => {
+                        console.log(response.data);
+                        console.log(response.status)
+                        stat = response.data;
+                        var dane_pobrane = response.data;
+                        var dane_zmienione = JSON.stringify(dane_pobrane);
+                        var dane_zmienione2 = JSON.parse(dane_zmienione);
+                        id_user = dane_zmienione2.id;
+                    })
+                    .catch(async (error) => {
+                        alert('Błąd!')
+                    });
+                // await  axios.get('http://localhost:8080/drivers/'+id_user)
+                //     .then((response) => {
+                //         console.log(response.data);
+                //         console.log(response.status)
+                //         dane_pobrane = response.data;
+                //         dane_zmienione = JSON.stringify(dane_pobrane);
+                //         dane_zmienione2 = JSON.parse(dane_zmienione);
+                //         if(dane_zmienione2.addressDto.apartmentnumber==0)
+                //             document.getElementById('apartmentNumber').setAttribute('value'," ");
+                //         else
+                //             document.getElementById('apartmentNumber').setAttribute('value',dane_zmienione2.addressDto.apartmentnumber);
+                //         document.getElementById('buildingNumber').setAttribute('value',dane_zmienione2.addressDto.buildingnumber);
+                //         document.getElementById('city').setAttribute('value',dane_zmienione2.addressDto.city);
+                //         document.getElementById('country').setAttribute('value',dane_zmienione2.addressDto.country);
+                //         document.getElementById('postalCode').setAttribute('value',dane_zmienione2.addressDto.postcode);
+                //         document.getElementById('street').setAttribute('value',dane_zmienione2.addressDto.street);
+                //         document.getElementById('date').setAttribute('value',dane_zmienione2.birthdate);
+                //         document.getElementById('email').setAttribute('value',dane_zmienione2.email);
+                //         document.getElementById('name').setAttribute('value',dane_zmienione2.firstname);
+                //         document.getElementById('telephon').setAttribute('value',dane_zmienione2.phonenr);
+                //         document.getElementById('last_name').setAttribute('value',dane_zmienione2.surname);
+
+                  //  })
+                // .catch( (error) => {
+                //     alert('Błąd!')})
+
+            }
+            get_data();
+        </script>
+
+
+        <script id="edit">
+            var stat;
+            var id_user;
+            async function edit(){
+                var id;
+                await axios.get('http://localhost:8080/username')
+                    .then((response) => {
+                        console.log(response.data);
+                        console.log(response.status)
+                        stat = response.data;
+                        var dane_pobrane = response.data;
+                        var dane_zmienione = JSON.stringify(dane_pobrane);
+                        var dane_zmienione2 = JSON.parse(dane_zmienione);
+                        id_user = dane_zmienione2.id;
+                    })
+                    .catch(async (error) => {
+                        alert('Błąd!')
+                    });
+                var mieszkanie = document.getElementById('apartmentNumber').value;
+                var budynek = document.getElementById('buildingNumber').value;
+                var miasto = document.getElementById('city').value;
+                var kraj = document.getElementById('country').value;
+                var kod = document.getElementById('postalCode').value;
+                var ulica = document.getElementById('street').value;
+                var data = document.getElementById('date').value;
+                var mail = document.getElementById('email').value;
+                var imie = document.getElementById('name').value;
+                var telefon = document.getElementById('telephon').value;
+                var nazwisko = document.getElementById('last_name').value;
+                if(imie==""||budynek==""||miasto==""||kraj==""||kod==""||ulica==""||data==""||mail==""||
+                    telefon==""||nazwisko=="")
+                    return  alert('Edytowanie nie powiodło się! Niepoprawnie uzupełniono dane!');
+
+
+                await axios.get('http://localhost:8080/drivers/'+id_user)
+                    .then((response) => {
+                        console.log(response.data);
+                        console.log(response.status)
+                        let dane_pobrane = response.data;
+                        var dane_zmienione = JSON.stringify(dane_pobrane);
+                        var danezmienione2 = JSON.parse(dane_zmienione);
+                        const dane =
+                            {
+                                addressDto: {
+                                    apartmentnumber: 0,
+                                    buildingnumber: 0,
+                                    city: "string",
+                                    country: "string",
+                                    postcode: "string",
+                                    street: "string"
+                                },
+                                birthdate: "2021-06-22T13:22:36.032Z",
+                                email: "string",
+                                firstname: "string",
+                                id: 4,
+                                phonenr: "string",
+                                salary: 0,
+                                surname: "string"
+                            };
+
+                        axios.put('http://localhost:8080/drivers', JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
+                            .then((response) => {
+                                console.log(response.data);
+                                console.log(response.status)
+                                stat = response.status;
+                                alert('Pomyślnie edytowano dane!');
+                            })
+                    })
+                    .catch( (error) => {
+                        alert('Błąd!')})
+
+            }
+        </script>
+        <form>
+            <label >Imię(*):</label><br>
+            <input type="text" id="name"> <br>
+            <label >Nazwisko(*):</label><br>
+            <input type="text" id="last_name"> <br>
+            <label >Data urodzenia(*):</label><br>
+            <input type="date" id="date"> <br>
+            <label >E-mail(*):</label><br>
+            <input type="email" id="email"> <br>
+            <label >Numer telefonu(*):</label><br>
+            <input type="text" id="telephon"> <br>
+            <label >Miasto(*):</label><br>
+            <input type="text" id="city"> <br>
+            <label >Kraj(*):</label><br>
+            <input type="text" id="country"> <br>
+            <label >Kod pocztowy(*):</label><br>
+            <input type="text" id="postalCode"> <br>
+            <label >Ulica(*):</label><br>
+            <input type="text" id="street"> <br>
+            <label >Numer budynku(*):</label><br>
+            <input type="number" id="buildingNumber"> <br>
+            <label >Numer mieszkania:</label><br>
+            <input type="number" id="apartmentNumber"> <br><br>
+            <input type ="SUBMIT" class="button" value ="Edytuj dane" id = "send" onclick="edit()">
+        </form>
+        </form>
+    </div>
+</div>
+</body>
+</html>

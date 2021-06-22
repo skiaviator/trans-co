@@ -1,36 +1,37 @@
 package transport.co.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
+import transport.co.api.request.BusRequest;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name="buses")
 public class Bus {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bus_generator")
+    @SequenceGenerator(name="bus_generator", sequenceName = "bus_seq")
     private long id;
 
-    @OneToMany(mappedBy = "bus")
-    private List<Schedule> schedule;
-
     @ManyToOne
-    @JoinColumn(name="perm_parking_id",nullable=false)
-    private PermParking permParking;
+    @JoinColumn(name = "route_id")
+    private Route route;
 
-    @ManyToMany(mappedBy="drivedBuses")
-    private List<Driver> drivers;
+   // @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "bus")
+   // private List<Schedule> schedule;
+
+//    @ManyToMany(mappedBy="drivedBuses")
+//    private List<Driver> drivers;
+
+    @OneToMany(mappedBy="bus")
+    private List<Driver> drivers=new ArrayList<>();
 
     private String busModel;
 
@@ -41,11 +42,20 @@ public class Bus {
 
     private String avFuelConsumption;
 
-    private double mileage;
-
     @Column(nullable=false)
     private boolean availability;
 
     private int capacity;
 
+    public Bus() {
+    }
+
+    public Bus(BusRequest busRequest) {
+        this.busModel = busRequest.getBusModel();
+        this.mark = busRequest.getMark();
+        this.prodDate = busRequest.getProdDate();
+        this.avFuelConsumption = busRequest.getAvFuelConsumption();
+        this.availability = busRequest.isAvailability();
+        this.capacity = busRequest.getCapacity();
+    }
 }

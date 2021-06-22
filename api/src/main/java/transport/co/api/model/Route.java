@@ -1,39 +1,55 @@
 package transport.co.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import transport.co.api.request.RouteRequest;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Setter
 @Getter
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @Table(name = "routes")
 public class Route {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_generator")
+    @SequenceGenerator(name="route_generator", sequenceName = "route_seq")
     private long id;
 
     private float fee;
 
-    @OneToMany(mappedBy = "route")
+    private String routeName;
+
+    private String rideTime;
+
+
+    //routeWDroogastrone
+
+    @OneToMany(cascade = CascadeType.REMOVE,mappedBy = "route")
     private List<Reservation> reservation;
 
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<Schedule> schedule=new ArrayList<>();
 
-    @OneToMany(mappedBy = "route")
-    private List<Schedule> schedule;
+    @OneToMany(mappedBy="route")
+    private List<Bus> buses=new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
             name = "route_stop",
             joinColumns = @JoinColumn(name = "route_id"),
             inverseJoinColumns = @JoinColumn(name = "stop_id"))
-    private List<Stop> routeStops;
+    private List<Stop> routeStops=new ArrayList<>();
+
+    public Route (RouteRequest routeRequest){
+        this.fee=routeRequest.getFee();
+        this.routeName=routeRequest.getRouteName();
+        this.rideTime=routeRequest.getRideTime();
+    }
+    public Route(){}
 
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+    <html>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+<link rel="stylesheet" href="/api/api.main/adds/style.css">
+    <div id="webpage">
+        <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
+        <div id="up"> 
+            
+            <ul>
+                <h1>Firma transportowa "KKBus sp. z o. o."</h1>
+                <li><a href="manage_workers.html">ZARZĄDZAJ PRACOWNIKAMI</a></li> 
+                <li><a href="manage_routes.html">ZARZĄDZAJ TRASAMI</a></li> 
+                <li><a href="#">ZARZĄDAJ NAGRODAMI</a></li> 
+                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li>
+                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> 
+                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>
+                <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>  
+                <li><a href="#">WYLOGUJ SIĘ</a></li> 
+            </ul>
+         </div>
+         <div id="description"> <h3>Poniżej podano dane aktualnie trwających promocji:</h3> </div>
+         <div id = form method ="GET">
+            <pre>
+                (dane z bazy)
+            </pre>
+            </div>
+            <div id = form1>
+                
+                <form action="manage_presents.html" method ="GET">  
+                <h4>Dodaj nową promocję:</h4>             
+                <label >Nazwa promocji:</label><br>
+                <input type="text" id="name"> <br><br>
+                <label >Warunki promocji:</label><br>
+                <textarea name="warunki" id="arguments" cols="30" rows="10"></textarea>><br><br>
+                <label >Nagroda:</label><br>
+                <input type="text" id="present"> <br><br>
+                <input type ="submit" id = "dodaj" value="Dodaj nagrodę">
+                </form>
+            </div>
+            <div id = form1>
+                <form action="manage_presents.html" method ="GET">
+                    <h4>Zmień dane promocji:</h4>
+                    <label >Podaj identyfikator promocji z bazy:</label><br>
+                    <input type="number" id="id"> <br><br>
+                    <label >Nazwa promocji:</label><br>
+                    <input type="text" id="name"> <br><br>
+                    <label >Warunki promocji:</label><br>
+                    <textarea name="warunki" id="arguments" cols="30" rows="10"></textarea>><br><br>
+                    <label >Nagroda:</label><br>
+                    <input type="text" id="present"> <br><br>
+                    <input type ="submit" id = "aktualizuj" value="Aktualizuj dane promocji">
+                    </form>
+                </div>
+                    <form action="manage_presents.html" method ="GET">
+                        <h4>Usuń promocję z bazy:</h4>
+                        <label >Podaj identyfikator promocji z bazy:</label><br>
+                        <input type="number" id="id"> <br><br>
+                        <input type ="submit" id = "usun" value="Usuń promocję">
+                        </form>
+    </body>
+    </html>
