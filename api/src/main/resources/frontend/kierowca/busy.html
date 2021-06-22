@@ -11,15 +11,13 @@
 
         <ul>
             <h1>Firma transportowa "KKBus sp. z o. o."</h1>
-            <li><a href="manage_workers.html">ZARZĄDZAJ KLIENTAMI</a></li>
-            <li><a href="manage_routes.html">ZARZĄDZAJ TRASAMI</a></li>
-            <li><a href="manage_drivers.html">ZARZĄDZAJ KIEROWCAMI</a></li>
+            <li><a href="bus.html">ROZKŁAD JAZDY</a></li>
+            <li><a href="#">POJAZDY</a></li>
 
             <!--                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
             <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
             <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
-            <li><a href="#">ZARZĄDZAJ POJAZDAMI</a></li>
-            <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
+            <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">  WYLOGUJ SIĘ</a></li>
         </ul>
     </div>
     <div id="description"> <h2>Poniżej podano dane posiadanych pojazdów:</h2>
@@ -75,61 +73,7 @@
         </script>
 
     </div>
-    <div id = form1>
 
-        <form>
-            <script>
-                async function add_bus() {
-                    // dodawanie tras
-                    var avFuelConsumption1 = document.getElementById('fuel').value;
-                    var busModel1 = document.getElementById('model').value;
-                    var capacity1 = document.getElementById('miejsca').value;
-                    var mark1 = document.getElementById('marka').value;
-                    var prodDate1 = document.getElementById('rocznik').value;
-
-                    dane =
-
-
-
-                        {
-                            avFuelConsumption: avFuelConsumption1,
-                            availability: true,
-                            busModel: busModel1,
-                            capacity: capacity1,
-                            mark: mark1,
-                            prodDate: prodDate1
-                        }
-
-
-
-                    await axios.post('http://localhost:8080/buses', JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
-                        .then((response) => {
-                            console.log(response.data);
-                            console.log(response.status)
-                            stat = response.status;
-                            alert('Pomyślnie dodano busa!')
-                            get_buses();
-                        })
-                        .catch((error) => {
-
-                        });
-                }
-
-            </script>
-            <h4>Dodaj nowy pojazd do bazy:</h4>
-            <label >Marka busa:</label><br>
-            <input type="text" id="marka"> <br>
-            <label >Model busa:</label><br>
-            <input type="text" id="model"> <br>
-            <label >Data produkcji:</label><br>
-            <input type="date" id="rocznik"> <br>
-            <label >Średnie zużycie paliwa:</label><br>
-            <input type="text" id="fuel"> <br>
-            <label >Ilosć miejsc:</label><br>
-            <input type="text" id="miejsca"> <br><br>
-            <input type ="submit" class="button" id = "dodaj" value="Dodaj pojazd" onclick="add_bus()">
-        </form>
-    </div>
 </div>
 </body>
 </html>

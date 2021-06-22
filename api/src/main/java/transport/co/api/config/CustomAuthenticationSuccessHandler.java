@@ -65,7 +65,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         roleTargetUrlMap.put("ROLE_CUSTOMER", "http://localhost:63342/api/api.main/frontend/klient/reservacion.html");
         roleTargetUrlMap.put("ROLE_ADMIN", "http://localhost:63342/api/api.main/frontend/wlasciciel/manage_routes.html");
        roleTargetUrlMap.put("ROLE_DRIVER", "http://localhost:63342/api/api.main/frontend/kierowca/bus.html");
-        roleTargetUrlMap.put("ROLE_EMPLOYEE", "http://localhost:63342/api/api.main/frontend/pracownik_sekretariatu/reservation_for_client.html");
+        roleTargetUrlMap.put("ROLE_EMPLOYEE", "http://localhost:63342/api/api.main/frontend/pracownik_sekretariatu/manage_buses.html");
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {

@@ -30,8 +30,8 @@
 
     <div id = form>
         <script>
-            //    async function get_buses()
-            //   {
+               async function get_buses()
+              {
             var dane_pobrane ;
             var dane_zmienione;
             var dane_zmienione2 ;
@@ -70,7 +70,7 @@
 
                 });
 
-            //      }
+                  }
             get_buses();
         </script>
 
@@ -127,26 +127,10 @@
             <input type="text" id="fuel"> <br>
             <label >Ilosć miejsc:</label><br>
             <input type="text" id="miejsca"> <br><br>
-            <input type ="submit" class="button" id = "dodaj" value="Dodaj pojazd" onclick="add_bus()">
+            <input type ="button" class="button" id = "dodaj" value="Dodaj pojazd" onclick="add_bus()">
         </form>
     </div>
 </div>
-<!--               <div id = form1>-->
-<!--                   <form action="manage_buses.html" method ="GET">-->
-<!--                       <h4>Zmień dane pojazdu:</h4>-->
-<!--                       <label >Podaj identyfikator pojazdu z bazy:</label><br>-->
-<!--                       <input type="number" id="id"> <br><br>-->
-<!--                       <label >Marka busa:</label><br>-->
-<!--                       <input type="text" id="marka"> <br><br>-->
-<!--                       <label >Model busa:</label><br>-->
-<!--                       <input type="text" id="model"> <br><br>-->
-<!--                       <label >Rok produkcji:</label><br>-->
-<!--                       <input type="number" id="rocznik"> <br><br>-->
-<!--                       <label >Przypisany kierowca:</label><br>-->
-<!--                       <input type="text" id="kierowca"> <br><br>-->
-<!--                       <input type ="submit" id = "aktualizuj" value="Aktualizuj dane pojazdu">-->
-<!--                       </form>-->
-<!--                   </div>-->
 <form>
     <script>
         async  function delete_bus() {
@@ -166,7 +150,97 @@
     <h4>Usuń pojazd z bazy:</h4>
     <label >Podaj identyfikator pojazdu z bazy:</label><br>
     <input type="number" id="id_busa"> <br><br>
-    <input type ="submit" class="button" id = "usun" value="Usuń pojazd" onclick = "delete_bus()">
+    <input type ="button" class="button" id = "usun" value="Usuń pojazd" onclick = "delete_bus()">
+</form>
+
+<form>
+    <script>
+        async  function assign() {
+            var id1 = document.getElementById('id_bus').value;
+            var id2 = document.getElementById('id_route').value;
+            await axios.patch('http://localhost:8080/buses/'+id1+'/assign-route?routeId='+id2)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie przypisano busa do trasy!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Przypisz pojazd do trasy:</h4>
+    <label >Podaj identyfikator pojazdu z bazy:</label><br>
+    <input type="number" id="id_bus"> <br>
+    <label >Podaj identyfikator trasy z bazy:</label><br>
+    <input type="number" id="id_route"> <br><br>
+    <input type ="button" class="button" id = "patch" value="Przypisz" onclick = "assign()">
+</form>
+
+<form>
+    <script>
+         function assign1() {
+            var id1 = document.getElementById('id_bus1').value;
+             axios.patch("http://localhost:8080/buses/"+id1+"/dismiss-route")
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie cofnięto przypisanie busa do trasy!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Cofnij przypisanie pojazdu do trasy:</h4>
+    <label >Podaj ID pojazdu, aby wycofać przypisanie:</label><br>
+    <input type="number" id="id_bus1"> <br><br>
+    <input type ="button" class="button" id = "patch1" value="Usuń przypisanie" onclick = "assign1()">
+</form>
+
+<form>
+    <script>
+        async  function assign5() {
+            var id1 = document.getElementById('id_driver1').value;
+            var id2 = document.getElementById('id_bus2').value;
+            await axios.patch( "http://localhost:8080/drivers/"+id1+"/assign-bus?busId="+id2)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie przypisano kierowcę do busa!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Przypisz kierowcę do pojazdu:</h4>
+    <label >Podaj identyfikator kierowcy z bazy:</label><br>
+    <input type="number" id="id_driver1"> <br>
+    <label >Podaj identyfikator pojazdu z bazy:</label><br>
+    <input type="number" id="id_bus2"> <br><br>
+    <input type ="button" class="button" id = "patch6" value="Przypisz" onclick = "assign5()">
+</form>
+
+<form>
+    <script>
+        function assign2() {
+            var id1 = document.getElementById('id_driver').value;
+            axios.patch("http://localhost:8080/drivers/"+id1+"/dismiss-bus")
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie cofnięto przypisanie kierowcy do busa!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Cofnij przypisanie kierowcy do pojazdu:</h4>
+    <label >Podaj ID kierowcy, aby wycofać przypisanie:</label><br>
+    <input type="number" id="id_driver"> <br><br>
+    <input type ="button" class="button" id = "patch2" value="Usuń przypisanie" onclick = "assign2()">
 </form>
 
 </body>
