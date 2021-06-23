@@ -55,7 +55,7 @@ if (pensja==null)
     pensja="0zł";
                         tablica[i] = ["Id: " + dane_zmienione2[i].id +
                         ". Nazwisko: " + dane_zmienione2[i].surname + ". Telefon: " + dane_zmienione2[i].phonenr +
-                        " Pensja: " + pensja+"."];
+                        ". Pensja: " + pensja+"zł."];
                         wypisz += tablica[i] + "\n";
                     }
                     document.getElementById("change").innerHTML = wypisz;
@@ -249,6 +249,12 @@ edit();
         async function edit() {
             document.getElementById('add').setAttribute('type','hidden');
             var id_kierowcy1=document.getElementById('id_kierowcy').value;
+            if( id_kierowcy1=="")
+            {
+                alert('Nie podano numeru ID!');
+                location='manage_drivers.html';
+
+            }
             var dane_pobrane;
             var dane_zmienione;
             var dane_zmienione2;
@@ -272,8 +278,8 @@ location='manage_drivers.html';
                });
         }
 
-        async function edytuj(){
-            var id_kierowcy1=document.getElementById('id_kierowcy').value;
+        async function edytuj() {
+            var id_kierowcy1 = document.getElementById('id_kierowcy').value;
 var nazwisko = document.getElementById('stop1').value;
 var telefon= document.getElementById('stop2').value;
 var pensja=document.getElementById("stop3").value;
@@ -281,7 +287,7 @@ var pensja=document.getElementById("stop3").value;
             var dane_pobrane;
             var dane_zmienione;
             var dane_zmienione2;
-            await axios.get('http://localhost:8080/drivers/'+id_kierowcy1)
+            await axios.get('http://localhost:8080/drivers/' + id_kierowcy1)
                 .then((response) => {
                     console.log(response.data);
                     console.log(response.status);
@@ -289,26 +295,32 @@ var pensja=document.getElementById("stop3").value;
                     dane_zmienione = JSON.stringify(dane_pobrane);
                     dane_zmienione2 = JSON.parse(dane_zmienione);
 
-                })        .catch( (error) => {
-                    alert('Błąd!')});
+
+
+                }).catch(async (error) => {
+                    alert('Błąd!')
+                });
             const dane =
+
                 {
-                    addressDto: {
-                        apartmentnumber: 0,
-                        buildingnumber: dane_zmienione2.addressDto.city,
-                        city: dane_zmienione2.addressDto.city,
-                        country: dane_zmienione2.addressDto.country,
-                        postcode: dane_zmienione2.addressDto.postcode,
-                        street: dane_zmienione2.addressDto.street
+                    "addressDto": {
+                        "apartmentnumber": dane_zmienione2.addressDto.apartmentnumber,
+                        "buildingnumber": dane_zmienione2.addressDto.buildingnumber,
+                        "city": dane_zmienione2.addressDto.city,
+                        "country": dane_zmienione2.addressDto.country,
+                        "postcode": dane_zmienione2.addressDto.postcode,
+                        "street": dane_zmienione2.addressDto.street
                     },
-                    birthdate: dane_zmienione2.birthdate,
-                    email: email,
-                    firstname: dane_zmienione2.firstname,
-                    id: dane_zmienione2.id,
-                    phonenr: telefon,
-                    salary: pensja,
-                    surname: nazwisko
+                    "birthdate": dane_zmienione2.birthdate,
+                    "busDto": null,
+                    "email": email,
+                    "firstname": dane_zmienione2.firstname,
+                    "id": id_kierowcy1,
+                    "phonenr": telefon,
+                    "salary": pensja,
+                    "surname": nazwisko
                 }
+
 
             axios.put('http://localhost:8080/drivers', JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
                 .then((response) => {
@@ -316,41 +328,20 @@ var pensja=document.getElementById("stop3").value;
                     console.log(response.status)
                     stat = response.status;
                     alert('Pomyślnie edytowano dane!');
+                    location="manage_drivers.html";
+                })
+            .catch( async(error) => {
+                alert('Błąd!');
 
-        })
-        .catch( (error) => {
-            alert('Błąd!')});
+            location="manage_drivers.html";
+        });
 
-location="manage_drivers.html";
         }
-
     </script>
     <h4>Edytuj dane kierowcy:</h4>
     <label>Podaj idantyfikator kierowcy</label><br>
     <input type="number" id="id_kierowcy"> <br>
-    <input type ="button" class="button1" id = "add" value="Pokaż formularz" onclick="add_form()"><br><br>
-</form>
-
-<form>
-    <script>
-        async  function delete_bus() {
-            var id1 = document.getElementById('id_busa').value;
-
-            await axios.delete('http://localhost:8080/drivers?driverId='+id1)
-                .then((response) => {
-                    console.log(response.data);
-                    console.log(response.status)
-                    alert('Pomyślnie usunięto kierowcę!');
-                })
-                .catch((error) => {
-                    alert('Wystąpił błąd!')
-                });
-        }
-    </script>
-    <h4>Zwolnij kierowcę:</h4>
-    <label >Podaj identyfikator kierowcy:</label><br>
-    <input type="number" id="id_busa"> <br><br>
-    <input type ="submit" class="button" id = "usun" value="Usuń kierowcę" onclick = "delete_bus()">
+    <input type ="submit" class="button1" id = "add" value="Pokaż formularz" onclick="add_form()"><br><br>
 </form>
 
 </body>

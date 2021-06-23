@@ -21,8 +21,8 @@ public class DriverDto extends PersonDto{
     private DriverDto(){}
     public static DriverDto from(Driver driver){
         DriverDto driverDto = new DriverDto();
+        if(driver.getBus()!=null) driverDto.setBusDto(BusDto.from(driver.getBus()));
         driverDto.setId(driver.getId());
-
         driverDto.setFirstname(driver.getFirstname());
         driverDto.setSurname(driver.getSurname());
         driverDto.setBirthdate(driver.getBirthdate());
@@ -31,7 +31,6 @@ public class DriverDto extends PersonDto{
         driverDto.setSalary(driver.getSalary());
 
         driverDto.setAddressDto(AddressDto.from(driver.getAddress()));
-        driverDto.setBusDto(BusDto.from(driver.getBus()));
         return driverDto;
     }
 

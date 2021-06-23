@@ -74,33 +74,6 @@
            get_clients();
         </script>
            </div>
-     <script>
-
-            async function delete_customer() {
-             var id1 = document.getElementById('id_klienta').value;
-
-            await axios.delete('http://localhost:8080/customers?customerId='+id1)
-             .then((response) => {
-             console.log(response.data);
-             console.log(response.status)
-             alert('Pomyślnie usunięto klienta!');
-         })
-             .catch((error) => {
-             alert('Wystąpił błąd!')
-         });
-         }
-
-
-
-</script>
-           <div id = form1>
-               <form action="manage_workers.html">
-                   <h4>Usuń klienta z bazy:</h4>
-                   <label >Podaj numer ID klienta:</label><br>
-                   <input type="number" id="id_klienta"> <br><br>
-                   <input type ="submit" class = "button" id = "usun" value="Usuń klienta" onclick = "delete_customer()">
-               </form>
-           </div>
 
 <script>
 async function add_form(){
