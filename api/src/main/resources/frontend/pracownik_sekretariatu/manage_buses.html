@@ -1,66 +1,252 @@
 <!DOCTYPE html>
-    <html>
+<html>
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <body>
 <link rel="stylesheet" href="/api/api.main/adds/style.css">
-    <div id="webpage">
-        <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
-        <div id="up"> 
-            
-            <ul>
-                <h1>Firma transportowa "SuperLion" Sp. z o. o.</h1>
-                <li><a href="secretariat_calendar.html">WYŚWIETL GRAFIK SEKRETARIATU</a></li>               
-                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> 
-                <li><a href="reservacion_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>
-                <li><a href="#">ZARZĄDZAJ POJAZDAMI</a></li>  
-                <li><a href="#">WYLOGUJ SIĘ</a></li> 
-            </ul>
-         </div>
-         <div id="description"> <h3>Poniżej podano dane posiadanych pojazdów:</h3> </div>
-         <div id = form method ="GET">
-            <pre>
-                (dane z bazy)
-            </pre>
-            </div>
-            <div id = form1>
-                
-                <form action="manage_buses.html" method ="GET">  
-                <h4>Dodaj nowy pojazd do bazy:</h4>             
-                <label >Marka busa:</label><br>
-                <input type="text" id="marka"> <br><br>
-                <label >Model busa:</label><br>
-                <input type="text" id="model"> <br><br>
-                <label >Rok produkcji:</label><br>
-                <input type="number" id="rocznik"> <br><br>
-                <label >Przypisany kierowca:</label><br>
-                <input type="text" id="kierowca"> <br><br>
-                <input type ="submit" id = "dodaj" value="Dodaj pojazd">
-                </form>
-            </div>
-            <div id = form1>
-                <form action="manage_buses.html" method ="GET">
-                    <h4>Zmień dane pojazdu:</h4>
-                    <label >Podaj identyfikator pojazdu z bazy:</label><br>
-                    <input type="number" id="id"> <br><br>
-                    <label >Marka busa:</label><br>
-                    <input type="text" id="marka"> <br><br>
-                    <label >Model busa:</label><br>
-                    <input type="text" id="model"> <br><br>
-                    <label >Rok produkcji:</label><br>
-                    <input type="number" id="rocznik"> <br><br>
-                    <label >Przypisany kierowca:</label><br>
-                    <input type="text" id="kierowca"> <br><br>
-                    <input type ="submit" id = "aktualizuj" value="Aktualizuj dane pojazdu">
-                    </form>
-                </div>
-                    <form action="manage_buses.html" method ="GET">
-                        <h4>Usuń pojazd z bazy:</h4>
-                        <label >Podaj identyfikator pojazdu z bazy:</label><br>
-                        <input type="number" id="id"> <br><br>
-                        <input type ="submit" id = "usun" value="Usuń pojazd z bazy">
-                        </form>
-                    
-    </body>
-    </html>
+<div id="webpage">
+    <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
+    <div id="up">
+
+        <ul>
+            <h1>Firma transportowa "KKBus sp. z o. o."</h1>
+            <li><a href="manage_workers.html">KLIENCI</a></li>
+            <li><a href="manage_routes.html">TRASY</a></li>
+            <li><a href="manage_drivers.html">KIEROWCY</a></li>
+
+            <!--                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
+            <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
+            <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
+            <li><a href="#">POJAZDY</a></li>
+            <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
+        </ul>
+    </div>
+    <div id="description"> <h2>Poniżej podano dane posiadanych pojazdów:</h2>
+        <pre id = "change" style = "margin-left: -11cm">
+                   Brak pojazdów
+               </pre>
+    </div>
+
+    <div id = form>
+        <script>
+               async function get_buses()
+              {
+            var dane_pobrane ;
+            var dane_zmienione;
+            var dane_zmienione2 ;
+
+            axios.get('http://localhost:8080/buses')
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    dane_pobrane = response.data;
+                    dane_zmienione = JSON.stringify(dane_pobrane);
+                    dane_zmienione2 = JSON.parse(dane_zmienione);
+                    if (dane_pobrane == "")
+                        return document.getElementById("change").innerHTML = "Brak busów";
+
+
+                    var tablica = [];
+                    var wypisz = "";
+                    for (let i = 0; i <dane_zmienione2.length; i++) {
+
+                        var dostepnosc = dane_zmienione2[i].availability;
+                        var dostepnosc2;
+                        if (dostepnosc === true)
+                            dostepnosc2 = "dostępny"
+                        else
+                            dostepnosc2 = "niedostępny";
+                        tablica[i] = ["Id: " + dane_zmienione2[i].id +
+                        ". Marka: " + dane_zmienione2[i].mark + ". Model: " + dane_zmienione2[i].busModel +
+                        ". Średnie zużycie paliwa: " + dane_zmienione2[i].avFuelConsumption + ". Data produkcji: " +
+                        dane_zmienione2[i].prodDate + " Dostępność: " + dostepnosc2 + ". Liczba miejsc: " + dane_zmienione2[i].capacity + "."];
+                        wypisz += tablica[i] + "\n";
+                    }
+                    document.getElementById("change").innerHTML = wypisz;
+
+                })
+                .catch( (error) => {
+
+                });
+
+                  }
+            get_buses();
+        </script>
+
+    </div>
+    <div id = form1>
+
+        <form>
+            <script>
+                async function add_bus() {
+                    // dodawanie tras
+                    var avFuelConsumption1 = document.getElementById('fuel').value;
+                    var busModel1 = document.getElementById('model').value;
+                    var capacity1 = document.getElementById('miejsca').value;
+                    var mark1 = document.getElementById('marka').value;
+                    var prodDate1 = document.getElementById('rocznik').value;
+
+                    dane =
+
+
+
+                        {
+                            avFuelConsumption: avFuelConsumption1,
+                            availability: true,
+                            busModel: busModel1,
+                            capacity: capacity1,
+                            mark: mark1,
+                            prodDate: prodDate1
+                        }
+
+
+
+                    await axios.post('http://localhost:8080/buses', JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
+                        .then((response) => {
+                            console.log(response.data);
+                            console.log(response.status)
+                            stat = response.status;
+                            alert('Pomyślnie dodano busa!')
+                            get_buses();
+                        })
+                        .catch((error) => {
+
+                        });
+                }
+
+            </script>
+            <h4>Dodaj nowy pojazd do bazy:</h4>
+            <label >Marka busa:</label><br>
+            <input type="text" id="marka"> <br>
+            <label >Model busa:</label><br>
+            <input type="text" id="model"> <br>
+            <label >Data produkcji:</label><br>
+            <input type="date" id="rocznik"> <br>
+            <label >Średnie zużycie paliwa:</label><br>
+            <input type="text" id="fuel"> <br>
+            <label >Ilosć miejsc:</label><br>
+            <input type="text" id="miejsca"> <br><br>
+            <input type ="submit" class="button" id = "dodaj" value="Dodaj pojazd" onclick="add_bus()">
+        </form>
+    </div>
+</div>
+<form>
+    <script>
+        async  function delete_bus() {
+            var id1 = document.getElementById('id_busa').value;
+
+            await axios.delete('http://localhost:8080/buses?busId='+id1)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status)
+                    alert('Pomyślnie usunięto busa!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Usuń pojazd z bazy:</h4>
+    <label >Podaj identyfikator pojazdu z bazy:</label><br>
+    <input type="number" id="id_busa"> <br><br>
+    <input type ="submit" class="button" id = "usun" value="Usuń pojazd" onclick = "delete_bus()">
+</form>
+
+<form>
+    <script>
+        async  function assign() {
+            var id1 = document.getElementById('id_bus').value;
+            var id2 = document.getElementById('id_route').value;
+            await axios.patch('http://localhost:8080/buses/'+id1+'/assign-route?routeId='+id2)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie przypisano busa do trasy!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Przypisz pojazd do trasy:</h4>
+    <label >Podaj identyfikator pojazdu z bazy:</label><br>
+    <input type="number" id="id_bus"> <br>
+    <label >Podaj identyfikator trasy z bazy:</label><br>
+    <input type="number" id="id_route"> <br><br>
+    <input type ="submit" class="button" id = "patch" value="Przypisz" onclick = "assign()">
+</form>
+
+<form>
+    <script>
+         function assign1() {
+            var id1 = document.getElementById('id_bus1').value;
+             axios.patch("http://localhost:8080/buses/"+id1+"/dismiss-route")
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie cofnięto przypisanie busa do trasy!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Cofnij przypisanie pojazdu do trasy:</h4>
+    <label >Podaj ID pojazdu, aby wycofać przypisanie:</label><br>
+    <input type="number" id="id_bus1"> <br><br>
+    <input type ="submit" class="button" id = "patch1" value="Usuń przypisanie" onclick = "assign1()">
+</form>
+
+<form>
+    <script>
+        async  function assign5() {
+            var id1 = document.getElementById('id_driver1').value;
+            var id2 = document.getElementById('id_bus2').value;
+            await axios.patch( "http://localhost:8080/drivers/"+id1+"/assign-bus?busId="+id2)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie przypisano kierowcę do busa!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Przypisz kierowcę do pojazdu:</h4>
+    <label >Podaj identyfikator kierowcy z bazy:</label><br>
+    <input type="number" id="id_driver1"> <br>
+    <label >Podaj identyfikator pojazdu z bazy:</label><br>
+    <input type="number" id="id_bus2"> <br><br>
+    <input type ="submit" class="button" id = "patch6" value="Przypisz" onclick = "assign5()">
+</form>
+
+<form>
+    <script>
+        function assign2() {
+            var id1 = document.getElementById('id_driver').value;
+            axios.patch("http://localhost:8080/drivers/"+id1+"/dismiss-bus")
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    alert('Pomyślnie cofnięto przypisanie kierowcy do busa!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Cofnij przypisanie kierowcy do pojazdu:</h4>
+    <label >Podaj ID kierowcy, aby wycofać przypisanie:</label><br>
+    <input type="number" id="id_driver"> <br><br>
+    <input type ="submit" class="button" id = "patch2" value="Usuń przypisanie" onclick = "assign2()">
+</form>
+
+</body>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+</html>
