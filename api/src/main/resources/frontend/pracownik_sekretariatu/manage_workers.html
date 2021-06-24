@@ -11,13 +11,14 @@
             
             <ul>
                 <h1>Firma transportowa "KKBus sp. z o. o."</h1>
-                <li><a href="#">ZARZĄDZAJ KLIENTAMI </a></li>
-                <li><a href="manage_routes.html">ZARZĄDZAJ TRASAMI</a></li>
-                <li><a href="manage_drivers.html">ZARZĄDZAJ KIEROWCAMI</a></li>
-<!--                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
-<!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
-<!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
-                <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>
+                <li><a href="#">KLIENCI</a></li>
+                <li><a href="manage_routes.html">TRASY</a></li>
+                <li><a href="manage_drivers.html">KIEROWCY</a></li>
+
+                <!--                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
+                <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
+                <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
+                <li><a href="manage_buses.html">POJAZDY</a></li>
                 <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
             </ul>
          </div>
@@ -72,33 +73,6 @@
             }
            get_clients();
         </script>
-           </div>
-     <script>
-
-            async function delete_customer() {
-             var id1 = document.getElementById('id_klienta').value;
-
-            await axios.delete('http://localhost:8080/customers?customerId='+id1)
-             .then((response) => {
-             console.log(response.data);
-             console.log(response.status)
-             alert('Pomyślnie usunięto klienta!');
-         })
-             .catch((error) => {
-             alert('Wystąpił błąd!')
-         });
-         }
-
-
-
-</script>
-           <div id = form1>
-               <form action="manage_workers.html">
-                   <h4>Usuń klienta z bazy:</h4>
-                   <label >Podaj numer ID klienta:</label><br>
-                   <input type="number" id="id_klienta"> <br><br>
-                   <input type ="submit" class = "button" id = "usun" value="Usuń klienta" onclick = "delete_customer()">
-               </form>
            </div>
 
 <script>

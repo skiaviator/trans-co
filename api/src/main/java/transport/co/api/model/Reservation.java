@@ -6,6 +6,7 @@ import transport.co.api.logic.ReservationStatus;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Random;
 
 @Entity
 @Setter
@@ -29,6 +30,7 @@ public class Reservation {
     private Date depart;
 
     private int reservationNr;
+    Random rand = new Random();
 
 
 
@@ -39,7 +41,7 @@ public class Reservation {
     public Reservation(Customer customer, Route route, Date depart, ReservationStatus reservationStatus, int reservationNr){
         this.customer=customer;
         this.route=route;
-        this.reservationNr=reservationNr;
+        this.reservationNr=rand.nextInt(99999);
         this.reservationStatus=reservationStatus;
         this.depart=depart;
     }

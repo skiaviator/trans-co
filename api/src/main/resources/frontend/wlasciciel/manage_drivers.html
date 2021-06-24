@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+<link rel="stylesheet" href="/api/api.main/adds/style.css">
+<div id="webpage">
+    <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
+    <div id="up">
+
+        <ul>
+            <h1>Firma transportowa "KKBus sp. z o. o."</h1>
+            <li><a href="manage_workers.html">ZARZĄDZAJ KLIENTAMI</a></li>
+            <li><a href="manage_routes.html">ZARZĄDZAJ TRASAMI</a></li>
+            <li><a href="#">ZARZĄDZAJ KIEROWCAMI</a></li>
+            <!--                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
+            <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
+            <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
+            <li><a href="manage_buses.html">ZARZĄDZAJ POJAZDAMI</a></li>
+            <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
+        </ul>
+    </div>
+    <div id="description"> <h2>Poniżej podano dane obecnych kierowców:</h2>
+        <pre id = "change" style = "margin-left: 0cm">
+                   Brak kierowców
+               </pre>
+    </div>
+
+    <div id = form>
+        <script>
+               async function get_buses()
+              {
+            var dane_pobrane ;
+            var dane_zmienione;
+            var dane_zmienione2 ;
+
+            axios.get('http://localhost:8080/drivers')
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    dane_pobrane = response.data;
+                    dane_zmienione = JSON.stringify(dane_pobrane);
+                    dane_zmienione2 = JSON.parse(dane_zmienione);
+                    if (dane_pobrane == "")
+                        return document.getElementById("change").innerHTML = "Brak kierowców";
+
+
+                    var tablica = [];
+                    var wypisz = "";
+                    for (let i = 0; i <dane_zmienione2.length; i++) {
+var pensja =dane_zmienione2[i].salary;
+if (pensja==null)
+    pensja="0zł";
+                        tablica[i] = ["Id: " + dane_zmienione2[i].id +
+                        ". Nazwisko: " + dane_zmienione2[i].surname + ". Telefon: " + dane_zmienione2[i].phonenr +
+                        ". Pensja: " + pensja+"zł."];
+                        wypisz += tablica[i] + "\n";
+                    }
+                    document.getElementById("change").innerHTML = wypisz;
+
+                })
+                .catch( (error) => {
+
+                });
+
+                  }
+            get_buses();
+        </script>
+
+    </div>
+
+
+
+        <div id="form1">
+            <h4 style=" margin-left: 15cm">Dodawanie nowego kierowcy.<br> </h4>
+            <h3 style=" margin-left: 15cm">(*) - POLE OBOWIĄZKOWE</h3>
+            <script id="register">
+                var stat;
+                async function register(){
+                    var mieszkanie = document.getElementById('apartmentNumber').value;
+                    var budynek = document.getElementById('buildingNumber').value;
+                    var miasto = document.getElementById('city').value;
+                    var kraj = document.getElementById('country').value;
+                    var kod = document.getElementById('postalCode').value;
+                    var ulica = document.getElementById('street').value;
+                    var data = document.getElementById('date').value;
+                    var mail = document.getElementById('email').value;
+                    var imie = document.getElementById('name').value;
+                    var telefon = document.getElementById('telephon').value;
+                    var nazwisko = document.getElementById('last_name').value;
+                    var login= document.getElementById('login').value;
+                    var haslo = document.getElementById('haslo').value;
+                    var sprawdzenie = document.getElementById('sprawdzenie').value;
+                    if(imie==""||budynek==""||miasto==""||kraj==""||kod==""||ulica==""||data==""||mail==""||
+                        telefon==""||nazwisko==""||login==""||haslo==""||sprawdzenie=="")
+                        return  alert('Dodawanie kierowcy nie powiodło się! Niepoprawnie uzupełniono dane!');
+                    if(haslo!=sprawdzenie)
+                        return  alert('Hasła nie są identyczne!');
+                    const dane =
+                        {
+                            addressRequest: {
+                                apartmentnumber: 0,
+                                buildingnumber: budynek,
+                                city: miasto,
+                                country: kraj,
+                                postcode: kod,
+                                street: ulica
+                            },
+                            birthdate: data,
+                            email: mail,
+                            firstname: imie,
+                            phonenr: telefon,
+                            surname: nazwisko,
+                            userRequest: {
+                                matchingPassword: login,
+                                password: haslo,
+                                username: sprawdzenie
+                            }
+                        };
+
+                    await axios.post('http://localhost:8080/drivers', JSON.stringify(dane), {headers:{'Content-Type': 'application/JSON'}})
+                        .then((response) =>
+                        {
+                            console.log(response.data);
+                            console.log(response.status)
+                            stat = response.status;
+
+                        })
+                        .catch((error) =>{alert('Taki login lub e-mail już istnieją w bazie!')} );
+
+                    if(stat==200)
+                    {   alert('Pomyslnie dodano nowego kierowcę!');
+                        location= "manage_drivers.html";
+                    }
+                    else { alert('Dodawanie nowego kierowcy nie powiodło się! Spróbuj jeszcze raz!');}
+                }
+            </script>
+            <form>
+                <label >Login(*):</label><br>
+                <input type="text" id="login"> <br>
+                <label >Hasło(*):</label><br>
+                <input type="password" id="haslo"> <br>
+                <label >Powtórz hasło(*):</label><br>
+                <input type="password" id="sprawdzenie"> <br>
+                <label >Imię(*):</label><br>
+                <input type="text" id="name"> <br>
+                <label >Nazwisko(*):</label><br>
+                <input type="text" id="last_name"> <br>
+                <label >Data urodzenia(*):</label><br>
+                <input type="date" id="date"> <br>
+                <label >E-mail(*):</label><br>
+                <input type="email" id="email"> <br>
+                <label >Numer telefonu(*):</label><br>
+                <input type="text" id="telephon"> <br>
+                <label >Miasto(*):</label><br>
+                <input type="text" id="city"> <br>
+                <label >Kraj(*):</label><br>
+                <input type="text" id="country"> <br>
+                <label >Kod pocztowy(*):</label><br>
+                <input type="text" id="postalCode"> <br>
+                <label >Ulica(*):</label><br>
+                <input type="text" id="street"> <br>
+                <label >Numer budynku(*):</label><br>
+                <input type="number" id="buildingNumber"> <br>
+                <label >Numer mieszkania:</label><br>
+                <input type="number" id="apartmentNumber"> <br><br>
+                <input type ="button"  class="button" id = "edit" value="Dodaj kierowcę" onclick = "register()">
+            </form>
+        </div>
+    </div>
+
+<form id="form10">
+    <script>
+        async  function edit_driver() {
+            var id1 = document.getElementById('id_busa').value;
+
+            await axios.delete('http://localhost:8080/drivers?driverId='+id1)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status)
+                    alert('Pomyślnie usunięto kierowcę!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <script>
+
+        async function add_form(){
+
+            var lbl = document.createElement("LABEL");
+            var lblTxt = document.createTextNode("Nazwisko:");
+            lbl.appendChild(lblTxt);
+            var lbl1 = document.createElement("LABEL");
+            var lblTxt1 = document.createTextNode("Numer telefonu:");
+            lbl1.appendChild(lblTxt1);
+            var lbl2 = document.createElement("LABEL");
+            var lblTxt2 = document.createTextNode("Pensja:");
+            lbl2.appendChild(lblTxt2);
+            var lbl23 = document.createElement("LABEL");
+            var lblTxt23 = document.createTextNode("e-mail:");
+            lbl23.appendChild(lblTxt23);
+
+            var stop = document.createElement('input');
+            //document.getElementById('add').setAttribute('name','');
+            stop.setAttribute('type', 'text');
+            stop.setAttribute('place', 'stop');
+            stop.setAttribute('style', 'margin-right: 15cm');
+            stop.setAttribute('id', 'stop1');
+            var stop1 = document.createElement('input');
+            stop1.setAttribute('type', 'text');
+            stop1.setAttribute('place', 'stop');
+            stop1.setAttribute('style', 'margin-right: 15cm');
+            stop1.setAttribute('id', 'stop2');
+            var stop2 = document.createElement('input');
+            stop2.setAttribute('type', 'text');
+            stop2.setAttribute('place', 'stop');
+            stop2.setAttribute('style', 'margin-right: 15cm');
+            stop2.setAttribute('id', 'stop3');
+            var stop23 = document.createElement('input');
+            stop23.setAttribute('type', 'text');
+            stop23.setAttribute('place', 'stop');
+            stop23.setAttribute('style', 'margin-right: 15cm');
+            stop23.setAttribute('id', 'stop23');
+            var stop3 = document.createElement('input');
+            stop3.setAttribute('type', 'button');
+            stop3.setAttribute('value', 'Edytuj');
+            stop3.setAttribute('class','button');
+            stop3.setAttribute('id', 'stop4');
+            var add = document.getElementById('form10');
+
+            add.appendChild(lbl);
+            add.appendChild(stop);
+            add.appendChild(lbl1);
+            add.appendChild(stop1);
+            add.appendChild(lbl23);
+            add.appendChild(stop23);
+            add.appendChild(lbl2);
+            add.appendChild(stop2);
+            add.appendChild(stop3);
+document.getElementById('stop4').onclick=edytuj;
+edit();
+        }
+
+
+        async function edit() {
+            document.getElementById('add').setAttribute('type','hidden');
+            var id_kierowcy1=document.getElementById('id_kierowcy').value;
+            if( id_kierowcy1=="")
+            {
+                alert('Nie podano numeru ID!');
+                location='manage_drivers.html';
+
+            }
+            var dane_pobrane;
+            var dane_zmienione;
+            var dane_zmienione2;
+
+           await axios.get('http://localhost:8080/drivers/'+id_kierowcy1)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    dane_pobrane = response.data;
+                    dane_zmienione = JSON.stringify(dane_pobrane);
+                    dane_zmienione2 = JSON.parse(dane_zmienione);
+
+                    document.getElementById('stop1').setAttribute('value',dane_zmienione2.surname);
+                    document.getElementById('stop2').setAttribute('value',dane_zmienione2.phonenr);
+                    document.getElementById("stop3").setAttribute('value',dane_zmienione2.salary);
+                    document.getElementById("stop23").setAttribute('value',dane_zmienione2.email);
+
+               }).catch( (error) => {
+                   alert('Błąd!')
+location='manage_drivers.html';
+               });
+        }
+
+        async function edytuj() {
+            var id_kierowcy1 = document.getElementById('id_kierowcy').value;
+var nazwisko = document.getElementById('stop1').value;
+var telefon= document.getElementById('stop2').value;
+var pensja=document.getElementById("stop3").value;
+            var email=document.getElementById("stop23").value;
+            var dane_pobrane;
+            var dane_zmienione;
+            var dane_zmienione2;
+            await axios.get('http://localhost:8080/drivers/' + id_kierowcy1)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status);
+                    dane_pobrane = response.data;
+                    dane_zmienione = JSON.stringify(dane_pobrane);
+                    dane_zmienione2 = JSON.parse(dane_zmienione);
+
+
+
+                }).catch(async (error) => {
+                    alert('Błąd!')
+                });
+            const dane =
+
+                {
+                    "addressDto": {
+                        "apartmentnumber": dane_zmienione2.addressDto.apartmentnumber,
+                        "buildingnumber": dane_zmienione2.addressDto.buildingnumber,
+                        "city": dane_zmienione2.addressDto.city,
+                        "country": dane_zmienione2.addressDto.country,
+                        "postcode": dane_zmienione2.addressDto.postcode,
+                        "street": dane_zmienione2.addressDto.street
+                    },
+                    "birthdate": dane_zmienione2.birthdate,
+                    "busDto": null,
+                    "email": email,
+                    "firstname": dane_zmienione2.firstname,
+                    "id": id_kierowcy1,
+                    "phonenr": telefon,
+                    "salary": pensja,
+                    "surname": nazwisko
+                }
+
+
+            axios.put('http://localhost:8080/drivers', JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status)
+                    stat = response.status;
+                    alert('Pomyślnie edytowano dane!');
+                    location="manage_drivers.html";
+                })
+            .catch( async(error) => {
+                alert('Błąd!');
+
+            location="manage_drivers.html";
+        });
+
+        }
+    </script>
+    <h4>Edytuj dane kierowcy:</h4>
+    <label>Podaj idantyfikator kierowcy</label><br>
+    <input type="number" id="id_kierowcy"> <br>
+    <input type ="submit" class="button1" id = "add" value="Pokaż formularz" onclick="add_form()"><br><br>
+</form>
+
+<form>
+    <script>
+        async  function delete_bus() {
+            var id1 = document.getElementById('id_busa').value;
+
+            await axios.delete('http://localhost:8080/drivers?driverId='+id1)
+                .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status)
+                    alert('Pomyślnie usunięto kierowcę!');
+                })
+                .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+        }
+    </script>
+    <h4>Zwolnij kierowcę:</h4>
+    <label >Podaj identyfikator kierowcy:</label><br>
+    <input type="number" id="id_busa"> <br><br>
+    <input type ="submit" class="button" id = "usun" value="Usuń kierowcę" onclick = "delete_bus()">
+</form>
+
+</body>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+</html>
