@@ -37,10 +37,7 @@ public class CustomerService implements ICustomerService {
     }
 
     public Customer addCustomer(PersonRequest personRequest) {
-        Customer customer=new Customer(personRequest);
-        System.out.println(customer.getId());
-        customerRepository.save(customer);
-        return customer;
+       return registerNewCustomerAccount(personRequest);
     }
 
 
@@ -63,6 +60,7 @@ public class CustomerService implements ICustomerService {
     }
 
 
+    @Transactional
     public Customer registerNewCustomerAccount(PersonRequest personRequest) {
 
         AppUser appUser = new AppUser(personRequest.getUserRequest().getUsername()
@@ -90,6 +88,7 @@ public class CustomerService implements ICustomerService {
     private boolean emailExists(String email){
         return customerRepository.findByEmail(email) != null;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

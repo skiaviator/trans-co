@@ -1,12 +1,11 @@
 package transport.co.api.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 import transport.co.api.dto.DriverDto;
-import transport.co.api.model.Address;
-import transport.co.api.model.Bus;
-import transport.co.api.model.Driver;
-import transport.co.api.model.Route;
+import transport.co.api.model.*;
 import transport.co.api.repository.AppUserRepository;
 import transport.co.api.repository.DriverRepository;
 import transport.co.api.request.PersonRequest;
@@ -30,12 +29,23 @@ public class DriverService  {
         return driverRepository.findById(id).orElseThrow();
     }
 
+    @Transactional
     public Driver addDriver(PersonRequest personRequest) {
+        AppUser appUser = new AppUser(personRequest.getUserRequest().getUsername()
+                ,personRequest.getUserRequest().getPassword(),"ROLE_DRIVER");
         Driver driver=new Driver(personRequest);
-        driverRepository.save(driver);
-        return driver;
-    }
+        if (emailExists(personRequest.getEmail())){
+            throw new HttpServerErrorException(HttpStatus.IM_USED);
+        }
+        appUser.setPerson(driver);
+        appUserRepository.save(appUser);
 
+        driver.setAppUser(appUser);
+        driverRepository.save(driver);
+
+        return driver;
+
+    }
 
     @Transactional
     public DriverDto editDriver(DriverDto driverDto) {
@@ -60,6 +70,11 @@ public class DriverService  {
     public boolean ifExist(Long driverId){
         return driverRepository.existsById(driverId);
     }
+
+    private boolean emailExists(String email){
+        return driverRepository.findByEmail(email) != null;
+    }
+
 
     @Transactional
     public boolean assignBus(Long driverId, Long busId) {

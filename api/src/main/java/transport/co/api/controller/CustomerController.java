@@ -3,7 +3,9 @@ package transport.co.api.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import transport.co.api.dto.CustomerDto;
 import transport.co.api.dto.ReservationDto;
 import transport.co.api.model.Customer;
@@ -12,6 +14,7 @@ import transport.co.api.request.PersonRequest;
 import transport.co.api.request.ReservationRequest;
 import transport.co.api.service.CustomerService;
 import transport.co.api.service.ReservationService;
+import transport.co.api.service.UserDetailsServiceImpl;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @GetMapping("/customers")
     public ResponseEntity<List<CustomerDto>> getCustomers(){
@@ -38,11 +42,13 @@ public class CustomerController {
 
 
     @PutMapping("/customers")
-    public ResponseEntity<CustomerDto> editCustomer(@RequestBody CustomerDto customerDto){
-        return new ResponseEntity<>(customerService.editCustomer(customerDto),HttpStatus.OK);}
+    public ResponseEntity<CustomerDto> editCustomer(Authentication authentication, @RequestBody CustomerDto customerDto){
+        return new ResponseEntity<>(customerService.editCustomer(customerDto),HttpStatus.OK);
+    }
 
     @DeleteMapping("/customers")
     public ResponseEntity<Long> deleteCustomer(@RequestParam Long customerId){
+
         boolean isRemoved = customerService.deleteCustomer(customerId);
 
         if (!isRemoved) {
