@@ -23,16 +23,16 @@
 var id_user;
                async function get_data() {
 
-                      await axios.get('http://localhost:8080/username')
-                         .then((response) => {
-                             console.log(response.data);
-                             console.log(response.status)
-                             stat = response.data;
-                             id_user = stat.substring((stat.indexOf("person") + 14), (stat.indexOf("address")-2)); //id
-                         })
-                         .catch(async (error) => {
-                             alert('Błąd!')
-                         });
+                   await axios.get('http://localhost:8080/user')
+                       .then((response) => {
+                           console.log(response.data);
+                           console.log(response.status)
+                           stat = response.data;
+                           id_user = stat.substring((stat.indexOf("person") + 14), (stat.indexOf("address")-2)); //id
+                       })
+                       .catch((error) => {
+                      //     alert('id_!')
+                       });
                   await  axios.get('http://localhost:8080/customers/'+id_user)
                          .then((response) => {
                              console.log(response.data);
@@ -56,8 +56,8 @@ var id_user;
                              document.getElementById('last_name').setAttribute('value',dane_zmienione2.surname);
 
                          })
-                         // .catch( (error) => {
-                         //     alert('Błąd!')})
+                          .catch( (error) => {
+                              alert('Błąd!')})
 
                  }
                  get_data();
@@ -68,7 +68,7 @@ var id_user;
              var stat;
              async function edit(){
              var id;
-               await  axios.get('http://localhost:8080/username')
+               await  axios.get('http://localhost:8080/user')
                      .then((response) => {
                          console.log(response.data);
                          console.log(response.status)
@@ -94,7 +94,7 @@ var id_user;
                      return  alert('Edytowanie nie powiodło się! Niepoprawnie uzupełniono dane!');
 
 
-                 await  axios.get('http://localhost:8080/username')
+                 await  axios.get('http://localhost:8080/user')
                      .then((response) => {
                          console.log(response.data);
                          console.log(response.status)

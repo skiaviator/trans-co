@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+<link rel="stylesheet" href="/api/api.main/adds/style.css">
+<div id="webpage">
+  <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
+  <div id="up">
+
+    <ul>
+      <h1>Firma transportowa "KKBus sp. z o. o."</h1>
+      <li><a href="#">MÓJ POJAZD</a></li>
+      <li><a href="bus.html">ROZKŁAD JAZDY</a></li>
+      <li><a href="busy.html">POJAZDY</a></li>
+      <li><a href="Dane.html">MOJE DANE</a></li>
+      <!--                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
+      <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
+      <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
+      <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">  WYLOGUJ SIĘ</a></li>
+    </ul>
+  </div>
+  <div id="description"> <h2>Poniżej podano dane posiadanych pojazdów:</h2>
+    <pre id = "change" style = "margin-left: -11cm">
+                   Brak pojazdów
+               </pre>
+  </div>
+
+  <div id = form>
+    <script>
+
+
+      async function get_user(){
+        var dane1,dane2,dane3, dane4, id_user;
+       await axios.get('http://localhost:8080/user')
+                .then((response) => {
+                //  console.log(response.data);
+                  console.log(JSON(response.status));
+               //  stat = response.data;
+                // dane1= JSON.stringify(response.data);
+                  //dane2= JSON.parse(dane1);
+                 // id_user = dane2.person.id;
+                });
+                // .catch((error) => {
+                //   alert('Błąd!')
+                // });
+
+       // await axios.get("http://localhost:8080/drivers/"+id_user)
+       //         .then((response) => {
+       //           console.log(response.data);
+       //           console.log(response.status)
+       //           stat = response.data;
+       //           dane3= JSON.stringify(response.data);
+       //           dane4= JSON.parse(dane3);
+       //           if (dane4 === null)
+       //             return document.getElementById("change").innerHTML = "Brak busów";
+       //
+       //
+       //           var wypisz="";
+       //
+       //             if (dostepnosc === true)
+       //               dostepnosc2 = "dostępny"
+       //             else
+       //               dostepnosc2 = "niedostępny";
+       //             wypisz = "ID: "+ dane4.busDto.id +"\n"+
+       //             "Marka: "+ dane4.busDto.mark +"\n"+
+       //             "Model: "+ dane4.busDto.model +"\n"+
+       //             "Ilość miejsc: "+ dane4.busDto.capacity +"\n"+
+       //             "Dostępność: "+ dane4.busDto.availability +"\n"+
+       //             "Data produkcji: "+ dane4.busDto.prodDate +"\n"+
+       //             "Średnie zużycie paliwa: "+ dane4.busDto.avFuelConsumption +"\n";
+       //
+       //           document.getElementById("change").innerHTML = wypisz;
+       //         })
+       //         .catch((error) => {
+       //           alert('Błąd!')
+       //         });
+
+      }
+
+      get_user();
+    </script>
+
+  </div>
+
+</div>
+</body>
+<div>
+  <br>
+  <br>
+  <br>
+</div>
+</html>

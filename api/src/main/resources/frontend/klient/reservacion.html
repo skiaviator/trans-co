@@ -8,22 +8,6 @@
     <div id="webpage">
         <div id= "left"> <img src="/api/api.main/adds/123.png" style="width: 240px; height: 120px;"/></div>
         <div id="up">
-            <script>
-                let stat;
-                async function getUser() {
-                    let id;
-                    axios.get('http://localhost:8080/username')
-                        .then((response) => {
-                            console.log(response.data);
-                            console.log(response.status)
-                            stat = response.data;
-                            return id = stat.substring((stat.indexOf("person") + 14), (stat.indexOf("address")-2)); //id
-                        })
-                        .catch((error) => {
-                            alert('Błąd!')
-                        });
-                }
-                   </script>
             <ul>
                 <h1>Firma transportowa "KKBus sp. z o. o."</h1>
                 <li><a href="reserved.html">ZAREZERWUJ PRZEJAZD</a></li>
@@ -35,17 +19,20 @@
          <div id="description"> <h2>Poniżej podano dane aktualnych i historycznych rezerwacji:</h2></div>
         <script>
             async function get_data() {
-                var id_user;
-                await axios.get('http://localhost:8080/username')
-                    .then((response) => {
-                        console.log(response.data);
-                        console.log(response.status)
-                        stat = response.data;
-                        id_user = stat.substring((stat.indexOf("person") + 14), (stat.indexOf("address") - 2)); //id
-                    })
-                    .catch(async (error) => {
-                       // alert('Błąd!')
-                    });
+                let stat;
+
+                    var id_user;
+                    await  axios.get('http://localhost:8080/user')
+                        .then((response) => {
+                            console.log(response.data);
+                            console.log(response.status)
+                            stat = response.data;
+                            id_user = stat.substring((stat.indexOf("person") + 14), (stat.indexOf("address")-2)); //id
+                        })
+                        .catch((error) => {
+                            alert('Błąd!')
+                        });
+
                 var rezerwacja, rezerwacja_zmieniona, dane_zmienione2;
                 await axios.get('http://localhost:8080/reservations/' + id_user)
                     .then((response) => {
@@ -69,9 +56,9 @@
  if (dane_zmienione2[i].reservationStatus== "toBeRealized")
      realizacja="w trakcie";
  else realizacja="w trakcie";
-                    var tymczasowy2 = dane_zmienione2[i].depart;
+                    //var tymczasowy2 = dane_zmienione2[i].depart;
                     nrRez[i]=dane_zmienione2[i].reservationNr;
-                    tablica[i] = ["Numer rezerwacji: " + dane_zmienione2[i].reservationNr +
+                    tablica[i] = ["ID: "+dane_zmienione2[i].id+". Numer rezerwacji: " + dane_zmienione2[i].reservationNr +
                     ". Trasa: " + dane_zmienione2[i].routeName + ". Cena: " + dane_zmienione2[i].fee+ "zł." +
                        " Odjazd: " + dane_zmienione2[i].depart.slice(dane_zmienione2[i].depart.indexOf('T')-10,dane_zmienione2[i].depart.indexOf('T')+6 )+ " "+
                     " Stan: " + realizacja + "."];
@@ -83,6 +70,10 @@
                 if(wypisz=="")
                 {
                     document.getElementById("zaplacTeraz").setAttribute('style','display: none;');
+                    document.getElementById("anulujTeraz").setAttribute('style','display: none;');
+                    document.getElementById("number1").setAttribute('style','display: none;');
+                    document.getElementById("label1").setAttribute('style','display: none;');
+
                 }
                 else
                 {
@@ -95,11 +86,26 @@
 
 get_data();
 
+            function cancel(){
+
+                    var id1 = document.getElementById('number1').value;
+
+                    axios.delete('http://localhost:8080/reservations?reservationId='+id1)
+                    .then((response) => {
+                    console.log(response.data);
+                    console.log(response.status)
+                    alert('Pomyślnie usunięto rezerwację!');
+                })
+                    .catch((error) => {
+                    alert('Wystąpił błąd!')
+                });
+
+            }
 
                 </script>
 
             <div id = form>
-                <pre style="margin-left: -3cm" id = "change">
+                <pre style="margin-left: -5cm" id = "change">
                     Brak rezerwacji
                 </pre>
 <!--                <form action="https://ssl.dotpay.pl/t2/" method="post" target="_parent">&ndash;&gt;-->
@@ -129,8 +135,14 @@ get_data();
 
                         <!--------------------------------- KONIEC KONFIGURACJI ---------------------------------->
 
-                        <br><button class="button" style ="margin-left:-10cm" id="zaplacTeraz"  >Zapłać teraz</button>
+                        <button class="button" style ="margin-left:-11cm" id="zaplacTeraz"  >Zapłać teraz</button>
+
                     </form>
+                <form>
+                    <br><br> <br><label id="label1" style ="margin-left:-11cm;">Podaj ID rezerwacji, którą chcesz anulować: </label>
+                    <br><input id="number1" type="number" style ="margin-left:-11cm;">
+                    <br><button class="button" style ="margin-left:-11cm; background-color: red" id="anulujTeraz" onclick="cancel()"  >Anuluj rezerwację</button>
+                </form>
                     <br>
                 </div>
 

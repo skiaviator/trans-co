@@ -11,16 +11,17 @@
 
         <ul>
             <h1>Firma transportowa "KKBus sp. z o. o."</h1>
+            <li><a href="YourBus.html">MÓJ POJAZD</a></li>
             <li><a href="bus.html">ROZKŁAD JAZDY</a></li>
             <li><a href="#">POJAZDY</a></li>
-
+            <li><a href="Dane.html">MOJE DANE</a></li>
             <!--                <li><a href="manage_drivers.html">ZARZĄDZAJ GRAFIKIEM SEKRETARIATU</a></li> -->
             <!--                <li><a href="manage_drivers_calendar.html">ZARZĄDZAJ GRAFIKIEM KIEROWCÓW</a></li> -->
             <!--                <li><a href="reservacion_place_for_client.html">ZAREZERWUJ MIEJSCE DLA KLIENTA</a></li>-->
             <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">  WYLOGUJ SIĘ</a></li>
         </ul>
     </div>
-    <div id="description"> <h2>Poniżej podano dane posiadanych pojazdów:</h2>
+    <div id="description"> <h2>Poniżej podano dane pojazdów firmowych:</h2>
         <pre id = "change" style = "margin-left: -11cm">
                    Brak pojazdów
                </pre>
@@ -73,20 +74,9 @@
                 });
 
                   }
-                  function get_user(){
-                      axios.get('http://localhost:8080/username')
-                  .then((response) => {
-                          console.log(response.data);
-                          console.log(response.status)
-                          stat = response.data;
-                          id_user = stat.substring((stat.indexOf("person") + 14), (stat.indexOf("address")-2)); //id
-                      })
-                          .catch((error) => {
-                              alert('Błąd!')
-                          });
-                  }
+
             get_buses();
-               get_user();
+
         </script>
 
     </div>
