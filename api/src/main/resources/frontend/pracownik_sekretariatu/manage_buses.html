@@ -38,7 +38,6 @@
 
             axios.get('http://localhost:8080/buses')
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status);
                     dane_pobrane = response.data;
                     dane_zmienione = JSON.stringify(dane_pobrane);
@@ -104,7 +103,6 @@
 
                     await axios.post('http://localhost:8080/buses', JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
                         .then((response) => {
-                            console.log(response.data);
                             console.log(response.status)
                             stat = response.status;
                             alert('Pomyślnie dodano busa!')
@@ -131,7 +129,7 @@
         </form>
     </div>
 </div>
-<form>
+
 
 <form>
     <script>
@@ -140,7 +138,6 @@
             var id2 = document.getElementById('id_route').value;
             await axios.patch('http://localhost:8080/buses/'+id1+'/assign-route?routeId='+id2)
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status);
                     alert('Pomyślnie przypisano busa do trasy!');
                 })
@@ -163,7 +160,6 @@
             var id1 = document.getElementById('id_bus1').value;
              axios.patch("http://localhost:8080/buses/"+id1+"/dismiss-route")
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status);
                     alert('Pomyślnie cofnięto przypisanie busa do trasy!');
                 })
@@ -178,51 +174,9 @@
     <input type ="button" class="button" id = "patch1" value="Usuń przypisanie" onclick = "assign1()">
 </form>
 
-<form>
-    <script>
-        async  function assign5() {
-            var id1 = document.getElementById('id_driver1').value;
-            var id2 = document.getElementById('id_bus2').value;
-            await axios.patch( "http://localhost:8080/drivers/"+id1+"/assign-bus?busId="+id2)
-                .then((response) => {
-                    console.log(response.data);
-                    console.log(response.status);
-                    alert('Pomyślnie przypisano kierowcę do busa!');
-                })
-                .catch((error) => {
-                    alert('Wystąpił błąd!')
-                });
-        }
-    </script>
-    <h4>Przypisz kierowcę do pojazdu:</h4>
-    <label >Podaj identyfikator kierowcy z bazy:</label><br>
-    <input type="number" id="id_driver1"> <br>
-    <label >Podaj identyfikator pojazdu z bazy:</label><br>
-    <input type="number" id="id_bus2"> <br><br>
-    <input type ="button" class="button" id = "patch6" value="Przypisz" onclick = "assign5()">
-</form>
 
-<form>
-    <script>
-        function assign2() {
-            var id1 = document.getElementById('id_driver').value;
-            axios.patch("http://localhost:8080/drivers/"+id1+"/dismiss-bus")
-                .then((response) => {
-                    console.log(response.data);
-                    console.log(response.status);
-                    alert('Pomyślnie cofnięto przypisanie kierowcy do busa!');
-                })
-                .catch((error) => {
-                    alert('Wystąpił błąd!')
-                });
-        }
-    </script>
-    <h4>Cofnij przypisanie kierowcy do pojazdu:</h4>
-    <label >Podaj ID kierowcy, aby wycofać przypisanie:</label><br>
-    <input type="number" id="id_driver"> <br><br>
-    <input type ="button" class="button" id = "patch2" value="Usuń przypisanie" onclick = "assign2()">
-</form>
-
+    </div>
+    </div>
 </body>
 <div>
     <br>

@@ -39,7 +39,6 @@
 
            await axios.get('http://localhost:8080/buses')
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status);
                     dane_pobrane = response.data;
                     dane_zmienione = JSON.stringify(dane_pobrane);

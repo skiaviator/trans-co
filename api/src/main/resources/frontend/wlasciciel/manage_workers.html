@@ -32,7 +32,6 @@
             {
                 await axios.get('http://localhost:8080/customers')
                     .then((response) => {
-                        console.log(response.data);
                         console.log(response.status);
                         stat = response.data;
 
@@ -80,7 +79,6 @@
 
             await axios.delete('http://localhost:8080/customers?customerId='+id1)
              .then((response) => {
-             console.log(response.data);
              console.log(response.status)
              alert('Pomyślnie usunięto klienta!');
          })
@@ -156,7 +154,6 @@ var dane_zmienione2;
 
 await axios.get('http://localhost:8080/customers/'+id_kierowcy1)
 .then((response) => {
-console.log(response.data);
 console.log(response.status);
 dane_pobrane = response.data;
 dane_zmienione = JSON.stringify(dane_pobrane);

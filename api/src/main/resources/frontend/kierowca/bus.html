@@ -13,7 +13,7 @@
             <li><a href="#">ROZKŁAD JAZDY</a></li>
             <li><a href="busy.html">POJAZDY</a></li>
             <li><a href="Dane.html">MOJE DANE</a></li>
-            <li><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
+            <li action><a href="http://localhost:63342/api/api.main/frontend/niezalogowany/contact.html">WYLOGUJ SIĘ</a></li>
         </ul>
     </div>
 
@@ -30,7 +30,6 @@
 
                 await axios.get('http://localhost:8080/routes')
                     .then((response) => {
-                        console.log(response.data);
                         console.log(response.status);
                         stat = response.data;
                         dane_pobrane = response.data;
@@ -58,11 +57,10 @@
                             }
                             var tablica=[];
                             for(let j=0; j<dane_zmienione2[i].scheduleDtos.length;j++)
-                                tablica[j] = "["+dane_zmienione2[i].scheduleDtos[j].id+"]"+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+4,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T') )+"."+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+1,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T')-3 )+" godz."+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+7,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T')+6 );
+                                tablica[j] = (dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+4,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T') )+"."+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+1,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T')-3 )+" godz."+(dane_zmienione2[i].scheduleDtos[j].depart).slice(dane_zmienione2[i].scheduleDtos[j].depart.indexOf('-')+7,dane_zmienione2[i].scheduleDtos[j].depart.indexOf('T')+6 );
 
 
 
-                            console.log(tablica);
                             dane[i]=["ID: "+ dane_zmienione2[i].id+". "+"Trasa: "+ routeName+". "+"Cena: "+fee+" zł. "+"Czas: "+time +
                             "min. Przystanki: "+przystanki+"\nOdjazdy: "+ tablica];
                             wypisz += dane[i]+"\n";

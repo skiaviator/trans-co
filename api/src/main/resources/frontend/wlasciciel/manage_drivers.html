@@ -37,7 +37,6 @@
 
             axios.get('http://localhost:8080/drivers')
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status);
                     dane_pobrane = response.data;
                     dane_zmienione = JSON.stringify(dane_pobrane);
@@ -51,7 +50,7 @@
                     for (let i = 0; i <dane_zmienione2.length; i++) {
 var pensja =dane_zmienione2[i].salary;
 if (pensja==null)
-    pensja="0zł";
+    pensja="0";
                         tablica[i] = ["Id: " + dane_zmienione2[i].id +
                         ". Nazwisko: " + dane_zmienione2[i].surname + ". Telefon: " + dane_zmienione2[i].phonenr +
                         ". Pensja: " + pensja+"zł."];
@@ -122,7 +121,6 @@ if (pensja==null)
                     await axios.post('http://localhost:8080/drivers', JSON.stringify(dane), {headers:{'Content-Type': 'application/JSON'}})
                         .then((response) =>
                         {
-                            console.log(response.data);
                             console.log(response.status)
                             stat = response.status;
 
@@ -177,7 +175,6 @@ if (pensja==null)
 
             await axios.delete('http://localhost:8080/drivers?driverId='+id1)
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status)
                     alert('Pomyślnie usunięto kierowcę!');
                 })
@@ -260,7 +257,6 @@ edit();
 
            await axios.get('http://localhost:8080/drivers/'+id_kierowcy1)
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status);
                     dane_pobrane = response.data;
                     dane_zmienione = JSON.stringify(dane_pobrane);
@@ -288,7 +284,6 @@ var pensja=document.getElementById("stop3").value;
             var dane_zmienione2;
             await axios.get('http://localhost:8080/drivers/' + id_kierowcy1)
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status);
                     dane_pobrane = response.data;
                     dane_zmienione = JSON.stringify(dane_pobrane);
@@ -323,7 +318,6 @@ var pensja=document.getElementById("stop3").value;
 
             axios.put('http://localhost:8080/drivers', JSON.stringify(dane), {headers: {'Content-Type': 'application/JSON'}})
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status)
                     stat = response.status;
                     alert('Pomyślnie edytowano dane!');
@@ -350,7 +344,6 @@ var pensja=document.getElementById("stop3").value;
 
             await axios.delete('http://localhost:8080/drivers?driverId='+id1)
                 .then((response) => {
-                    console.log(response.data);
                     console.log(response.status)
                     alert('Pomyślnie usunięto kierowcę!');
                 })
