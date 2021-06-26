@@ -1,10 +1,13 @@
 package transport.co.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import transport.co.api.config.ActiveUserStore;
 import transport.co.api.model.AppUser;
@@ -46,5 +49,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public Long currentUserId(Authentication authentication) {
         AppUser appUser=(AppUser) authentication.getPrincipal();
         return appUser.getId();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

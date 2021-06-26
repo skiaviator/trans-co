@@ -28,6 +28,8 @@ public class CustomerService implements ICustomerService {
 
     private final CustomerRepository customerRepository;
     private final AppUserRepository appUserRepository;
+    private final UserDetailsServiceImpl userDetailsService;
+
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
     }
@@ -64,7 +66,7 @@ public class CustomerService implements ICustomerService {
     public Customer registerNewCustomerAccount(PersonRequest personRequest) {
 
         AppUser appUser = new AppUser(personRequest.getUserRequest().getUsername()
-                ,passwordEncoder().encode(personRequest.getUserRequest().getPassword()),"ROLE_CUSTOMER");
+                ,userDetailsService.passwordEncoder().encode(personRequest.getUserRequest().getPassword()),"ROLE_CUSTOMER");
 
 
         Customer customer=new Customer(personRequest);
@@ -89,23 +91,20 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findByEmail(email) != null;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 
     @EventListener(ApplicationReadyEvent.class)
     public void get() {
-        AppUser appUser=new AppUser("Jan",passwordEncoder().encode("Nowak"),"ROLE_CUSTOMER");
+        AppUser appUser=new AppUser("Jan",userDetailsService.passwordEncoder().encode("Nowak"),"ROLE_CUSTOMER");
         appUserRepository.save(appUser);
 
-        AppUser appUse2=new AppUser("Admin",passwordEncoder().encode("Adminowski"),"ROLE_ADMIN");
+        AppUser appUse2=new AppUser("Admin",userDetailsService.passwordEncoder().encode("Adminowski"),"ROLE_ADMIN");
         appUserRepository.save(appUse2);
 
-        AppUser appUse3=new AppUser("Driver",passwordEncoder().encode("Bus"),"ROLE_EMPLOYEE");
+        AppUser appUse3=new AppUser("Driver",userDetailsService.passwordEncoder().encode("Bus"),"ROLE_EMPLOYEE");
         appUserRepository.save(appUse3);
 
-        AppUser appUse4=new AppUser("Office",passwordEncoder().encode("Worker"),"ROLE_DRIVER");
+        AppUser appUse4=new AppUser("Office",userDetailsService.passwordEncoder().encode("Worker"),"ROLE_DRIVER");
         appUserRepository.save(appUse4);
 
     }

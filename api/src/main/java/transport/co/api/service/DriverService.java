@@ -21,6 +21,8 @@ public class DriverService  {
     private final DriverRepository driverRepository;
     private final AppUserRepository appUserRepository;
     private final BusService busService;
+    private final UserDetailsServiceImpl userDetailsService;
+
     public List<Driver> getDrivers() {
         return driverRepository.findAll();
     }
@@ -32,7 +34,7 @@ public class DriverService  {
     @Transactional
     public Driver addDriver(PersonRequest personRequest) {
         AppUser appUser = new AppUser(personRequest.getUserRequest().getUsername()
-                ,personRequest.getUserRequest().getPassword(),"ROLE_DRIVER");
+                ,userDetailsService.passwordEncoder().encode(personRequest.getUserRequest().getPassword()),"ROLE_DRIVER");
         Driver driver=new Driver(personRequest);
         if (emailExists(personRequest.getEmail())){
             throw new HttpServerErrorException(HttpStatus.IM_USED);
